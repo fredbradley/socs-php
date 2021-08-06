@@ -1,36 +1,36 @@
 {
-    "name": "vendor_slug/package_slug",
-    "description": ":package_description",
+    "name": "fredbradley/socs-php",
+    "description": "A PHP wrapper for the SOCS XML feeds.",
     "keywords": [
-        ":vendor_name",
-        "package_slug"
+        "fredbradley",
+        "socs-php"
     ],
-    "homepage": "https://github.com/vendor_slug/package_slug",
+    "homepage": "https://github.com/fredbradley/socs-php",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Fred Bradley",
+            "email": "code@fredbradley.co.uk",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.0"
+        "php": "^7.4||^8.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^9.0",
         "spatie/ray": "^1.28",
         "vimeo/psalm": "^4.8"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src"
+            "FredBradley\\SOCS\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "FredBradley\\SOCS\\Tests\\": "tests"
         }
     },
     "scripts": {
