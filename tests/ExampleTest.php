@@ -12,6 +12,7 @@ class ExampleTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
     /** @test */
     public function gets_data()
     {
