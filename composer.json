@@ -16,7 +16,9 @@
     ],
     "require": {
         "php": "^7.4||^8.0",
+        "ext-simplexml": "*",
         "guzzlehttp/guzzle": "^7.3",
+        "nesbot/carbon": "^2.51",
         "vlucas/phpdotenv": "^5.3"
     },
     "require-dev": {

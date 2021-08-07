@@ -1,0 +1,69 @@
+<?php
+
+
+namespace FredBradley\SOCS;
+
+
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
+
+class CoCurricular extends SOCS
+{
+    /**
+     * @return \SimpleXMLElement|false
+     */
+    public function getClubs(bool $withPupils = false, bool $withStaff = false, bool $withPlanning = false)
+    {
+        $query = [];
+        if ($withPlanning) {
+            $query[ 'planning' ] = true;
+        }
+        if ($withPupils) {
+            $query[ 'pupils' ] = true;
+        }
+        if ($withStaff) {
+            $query[ 'staff' ] = true;
+        }
+
+        $options = $this->loadQuery(array_merge([
+            'data' => 'clubs',
+        ], $query));
+
+        return $this->getResponse('cocurricular.ashx', ['query' => $options]);
+    }
+
+    public function getEvents(CarbonInterface $startDate, CarbonInterface $endDate, bool $staff = false)
+    {
+        $query = [
+            'startdate' => $startDate->format(self::DATE_STRING),
+            'enddate' => $endDate->format(self::DATE_STRING),
+        ];
+
+        if ($staff) {
+            $query[ 'staff' ] = true;
+        }
+
+        $options = $this->loadQuery(array_merge([
+            'data' => 'events',
+        ], $query));
+
+        return $this->getResponse('cocurricular.ashx', ['query' => $options]);
+    }
+
+    public function getRegisters(CarbonInterface $startDate = null)
+    {
+        if (is_null($startDate)) {
+            $startDate = Carbon::today();
+        }
+
+        $query = [
+            'startdate' => $startDate->format(self::DATE_STRING),
+        ];
+
+        $options = $this->loadQuery(array_merge([
+            'data' => 'registers',
+        ], $query));
+
+        return $this->getResponse('cocurricular.ashx', ['query' => $options]);
+    }
+}

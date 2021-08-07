@@ -2,66 +2,89 @@
 
 namespace FredBradley\SOCS;
 
-use Dotenv\Dotenv;
 use GuzzleHttp\Client;
 
-class SOCS
+/**
+ * Class SOCS
+ * @package FredBradley\SOCS
+ */
+abstract class SOCS
 {
     /**
-     * @var int
+     * SOCS XML URIs like dates in this format!
      */
-    public $socsId;
+    protected const DATE_STRING = 'j M Y';
+
     /**
      * @var string
      */
-    public $apiKey;
+    protected string $baseUri = 'https://www.socscms.com/socs/xml/';
 
     /**
      * @var Client
      */
-    private $client;
+    protected Client $client;
 
-    public function __construct(string $socsId = 'SOCSID', string $apiKey = 'SOCSAPIKEY')
+    /**
+     * @var int
+     */
+    private int $socsId;
+
+    /**
+     * @var string
+     */
+    private string $apiKey;
+
+    /**
+     * SOCS constructor.
+     *
+     * @param  \FredBradley\SOCS\Config  $config
+     */
+    public function __construct(Config $config)
     {
-        $dotenv = Dotenv::createImmutable(dirname(__DIR__), ".env");
-        $dotenv->safeLoad();
-        $this->socsId = (int) $_SERVER[$socsId];
-        $this->apiKey = (string) $_SERVER[$apiKey];
+        $this->socsId = (int) $config->socsId;
+        $this->apiKey = (string) $config->apiKey;
         $this->setClient();
     }
 
     /**
      * @return void
      */
-    private function setClient(): void
+    protected function setClient(): void
     {
         $this->client = new Client([
-            'base_uri' => 'https://www.socscms.com/socs/xml/',
+            'base_uri' => $this->baseUri,
         ]);
     }
 
     /**
-     * @return \SimpleXMLElement|false
+     * @param  array  $array
+     *
+     * @return array
      */
-    public function getClubs()
+    protected function loadQuery(array $array = []): array
     {
-        $response = $this->client->request("GET", "cocurricular.ashx", [
-            'query' => [
-                'data' => 'clubs',
-                'pupils' => 1,
-                'staff' => 1,
-                'planning' => 1,
-                'ID' => $this->socsId,
-                'key' => $this->apiKey,
-            ],
-        ]);
-        $xml = simplexml_load_string($response->getBody()->getContents());
+        $defaults = [
+            'ID' => $this->socsId,
+            'key' => $this->apiKey,
+        ];
 
-        return $xml;
+        return array_merge($defaults, $array);
     }
 
-    public function echoPhrase(string $str): string
+    /**
+     * @param  string  $uri
+     * @param  array  $options
+     * @param  string  $method
+     *
+     * @return false|\SimpleXMLElement|string|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function getResponse(string $uri, array $options = [], string $method = 'GET')
     {
-        return $str;
+        $response = $this->client->request($method, $uri, $options);
+
+
+        return simplexml_load_string($response->getBody()->getContents());
     }
 }
