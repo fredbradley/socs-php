@@ -24,9 +24,9 @@ class SOCS
     public function __construct(string $socsId = 'SOCSID', string $apiKey = 'SOCSAPIKEY')
     {
         $dotenv = Dotenv::createImmutable(dirname(__DIR__), ".env");
-        $dotenv->load();
-        $this->socsId = (int) $_ENV[$socsId];
-        $this->apiKey = (string) $_ENV[$apiKey];
+        $dotenv->safeLoad();
+        $this->socsId = (int) $_SERVER[$socsId];
+        $this->apiKey = (string) $_SERVER[$apiKey];
         $this->setClient();
     }
 
