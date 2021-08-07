@@ -1,8 +1,6 @@
 <?php
 
-
 namespace FredBradley\SOCS;
-
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -112,5 +110,4 @@ class Tuition extends SOCS
     {
         return $this->getFeed(self::SPORTSCOACHING, $startDate);
     }
-
 }
