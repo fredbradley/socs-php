@@ -1,8 +1,8 @@
 # SOCS PHP
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fredbradley/socs-php.svg?style=flat-square)](https://packagist.org/packages/fredbradley/socs-php)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/fredbradley/socs-php/run-tests?label=tests)](https://github.com/fredbradley/socs-php/actions?query=workflow%3ATests+branch%3Amaster)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/fredbradley/socs-php/Check%20&%20fix%20styling?label=code%20style)](https://github.com/fredbradley/socs-php/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amaster)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/fredbradley/socs-php/run-tests?label=tests)](https://github.com/fredbradley/socs-php/actions?query=workflow%3ATests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/fredbradley/socs-php/Check%20&%20fix%20styling?label=code%20style)](https://github.com/fredbradley/socs-php/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/fredbradley/socs-php.svg?style=flat-square)](https://packagist.org/packages/fredbradley/socs-php)
 
 This is a PHP wrapper for the [SOCS](https://misocs.com) XML feeds. 
