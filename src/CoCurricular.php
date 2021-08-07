@@ -5,6 +5,10 @@ namespace FredBradley\SOCS;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 
+/**
+ * Class CoCurricular
+ * @package FredBradley\SOCS
+ */
 class CoCurricular extends SOCS
 {
     /**
@@ -30,6 +34,14 @@ class CoCurricular extends SOCS
         return $this->getResponse('cocurricular.ashx', ['query' => $options]);
     }
 
+    /**
+     * @param  \Carbon\CarbonInterface  $startDate
+     * @param  \Carbon\CarbonInterface  $endDate
+     * @param  bool  $staff
+     *
+     * @return false|\SimpleXMLElement|string|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getEvents(CarbonInterface $startDate, CarbonInterface $endDate, bool $staff = false)
     {
         $query = [
@@ -48,6 +60,12 @@ class CoCurricular extends SOCS
         return $this->getResponse('cocurricular.ashx', ['query' => $options]);
     }
 
+    /**
+     * @param  \Carbon\CarbonInterface|null  $startDate
+     *
+     * @return false|\SimpleXMLElement|string|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getRegisters(CarbonInterface $startDate = null)
     {
         if (is_null($startDate)) {

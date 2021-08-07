@@ -10,6 +10,9 @@ use Dotenv\Dotenv;
  */
 class Config
 {
+    protected int $socsId;
+    protected string $apiKey;
+
     /**
      * Config constructor.
      *
