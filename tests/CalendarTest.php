@@ -5,7 +5,7 @@ namespace FredBradley\SOCS\Tests;
 use Carbon\Carbon;
 use FredBradley\SOCS\Calendar;
 
-class CalendarTests extends BaseTest
+class CalendarTest extends BaseTest
 {
     /** @test */
     public function getCalendar()

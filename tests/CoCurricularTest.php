@@ -5,7 +5,7 @@ namespace FredBradley\SOCS\Tests;
 use Carbon\Carbon;
 use FredBradley\SOCS\CoCurricular;
 
-class CoCurricularTests extends BaseTest
+class CoCurricularTest extends BaseTest
 {
     /** @test */
     public function getClubs()
