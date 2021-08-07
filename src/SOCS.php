@@ -20,7 +20,8 @@ class SOCS
      * @var Client
      */
     private $client;
-    public function __construct(string $socsId='SOCSID', string $apiKey='SOCSAPIKEY')
+
+    public function __construct(string $socsId = 'SOCSID', string $apiKey = 'SOCSAPIKEY')
     {
         $dotenv = Dotenv::createImmutable(dirname(__DIR__), ".env");
         $dotenv->load();
@@ -32,7 +33,8 @@ class SOCS
     /**
      * @return void
      */
-    private function setClient(): void {
+    private function setClient(): void
+    {
         $this->client = new Client([
             'base_uri' => 'https://www.socscms.com/socs/xml/',
         ]);
@@ -41,7 +43,8 @@ class SOCS
     /**
      * @return \SimpleXMLElement|false
      */
-    public function getClubs() {
+    public function getClubs()
+    {
         $response = $this->client->request("GET", "cocurricular.ashx", [
             'query' => [
                 'data' => 'clubs',
@@ -53,13 +56,12 @@ class SOCS
             ],
         ]);
         $xml = simplexml_load_string($response->getBody()->getContents());
+
         return $xml;
     }
-
 
     public function echoPhrase(string $str): string
     {
         return $str;
     }
-
 }
