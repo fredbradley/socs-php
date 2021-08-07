@@ -1,8 +1,6 @@
 <?php
 
-
 namespace FredBradley\SOCS\Tests;
-
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -36,6 +34,5 @@ class BaseTest extends TestCase
         $this->assertIsObject($result);
         $this->assertIsIterable($result);
         $this->assertThat($result, self::isInstanceOf(SimpleXMLElement::class));
-
     }
 }

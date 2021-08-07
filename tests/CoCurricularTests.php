@@ -15,6 +15,7 @@ class CoCurricularTests extends BaseTest
         $this->isIterableXmlObject($result);
         $this->assertObjectHasAttribute('club', $result);
     }
+
     /** @test */
     public function getEvents()
     {
@@ -32,5 +33,4 @@ class CoCurricularTests extends BaseTest
         $this->isIterableXmlObject($result);
         $this->assertObjectHasAttribute('pupil', $result);
     }
-
 }
