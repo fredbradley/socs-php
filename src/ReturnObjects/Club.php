@@ -30,7 +30,7 @@ class Club
      */
     private function getYearGroups(string $yearGroups)
     {
-        if ($yearGroups==='all') {
+        if ($yearGroups === 'all') {
             return $yearGroups;
         }
 
@@ -41,4 +41,3 @@ class Club
         return $collection;
     }
 }
-
