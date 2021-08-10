@@ -4,6 +4,7 @@ namespace FredBradley\SOCS\Tests;
 
 use Carbon\Carbon;
 use FredBradley\SOCS\CoCurricular;
+use Illuminate\Support\Collection;
 
 class CoCurricularTest extends BaseTest
 {
@@ -12,8 +13,7 @@ class CoCurricularTest extends BaseTest
     {
         $socs = new CoCurricular($this->config);
         $result = $socs->getClubs();
-        $this->isIterableXmlObject($result);
-        $this->assertObjectHasAttribute('club', $result);
+        $this->assertInstanceOf(Collection::class, $result);
     }
 
     /** @test */
@@ -29,7 +29,7 @@ class CoCurricularTest extends BaseTest
     public function getRegisters()
     {
         $socs = new CoCurricular($this->config);
-        $result = $socs->getRegisters(Carbon::now()->addMonths(2));
+        $result = $socs->getRegisters(Carbon::parse("2021-10-7"));
         $this->isIterableXmlObject($result);
         $this->assertObjectHasAttribute('pupil', $result);
     }

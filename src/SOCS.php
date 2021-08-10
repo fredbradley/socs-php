@@ -87,4 +87,14 @@ abstract class SOCS
 
         return simplexml_load_string($response->getBody()->getContents());
     }
+
+    public function recordsToCollection($records) : \Illuminate\Support\Collection
+    {
+        $array = [];
+        foreach ($records as $record) {
+            $array[] = ((array)$record);
+        }
+
+        return collect($array);
+    }
 }

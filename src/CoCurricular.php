@@ -4,6 +4,7 @@ namespace FredBradley\SOCS;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Illuminate\Support\Collection;
 
 /**
  * Class CoCurricular
@@ -12,9 +13,9 @@ use Carbon\CarbonInterface;
 class CoCurricular extends SOCS
 {
     /**
-     * @return \SimpleXMLElement|false
+     * @return Collection
      */
-    public function getClubs(bool $withPupils = false, bool $withStaff = false, bool $withPlanning = false)
+    public function getClubs(bool $withPupils = false, bool $withStaff = false, bool $withPlanning = false): Collection
     {
         $query = [];
         if ($withPlanning) {
@@ -31,7 +32,7 @@ class CoCurricular extends SOCS
             'data' => 'clubs',
         ], $query));
 
-        return $this->getResponse('cocurricular.ashx', ['query' => $options]);
+        return $this->recordsToCollection($this->getResponse('cocurricular.ashx', ['query' => $options]));
     }
 
     /**
