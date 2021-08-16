@@ -21,8 +21,11 @@ class Config
      */
     public function __construct(string $socsId = 'SOCSID', string $apiKey = 'SOCSAPIKEY')
     {
-        $dotenv = Dotenv::createImmutable(dirname(__DIR__), ".env");
-        $dotenv->safeLoad();
+        $filename = dirname(__DIR__).'/.env';
+        if (file_exists($filename)) {
+            $dotenv = Dotenv::createImmutable(dirname(__DIR__), ".env");
+            $dotenv->safeLoad();
+        }
         $this->socsId = $_SERVER[$socsId] ?? $socsId;
         $this->apiKey = $_SERVER[$apiKey] ?? $apiKey;
     }
