@@ -26,5 +26,4 @@ class MusicLesson
         $this->location = $lesson['location'];
         $this->attendance = $lesson['attendance'];
     }
-
 }
