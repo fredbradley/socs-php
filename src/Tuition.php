@@ -5,6 +5,7 @@ namespace FredBradley\SOCS;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Exception;
+use FredBradley\SOCS\ReturnObjects\MusicLesson;
 
 /**
  * Class Tuition
@@ -75,7 +76,9 @@ class Tuition extends SOCS
             'data' => $feed,
         ], $query));
 
-        return $this->getResponse('tuition.ashx', ['query' => $options]);
+        $response = $this->getResponse('tuition.ashx', ['query' => $options]);
+
+        return $this->recordsToCollection($response)->mapInto(MusicLesson::class);
     }
 
     /**
