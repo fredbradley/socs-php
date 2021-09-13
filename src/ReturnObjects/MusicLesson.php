@@ -38,6 +38,7 @@ class MusicLesson
     private function convertDate(string $date)
     {
         $dateBits = explode("/", $date);
+
         return $dateBits[ 2 ].'-'.$dateBits[ 1 ].'-'.$dateBits[ 0 ];
     }
 }
