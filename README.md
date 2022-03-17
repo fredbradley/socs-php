@@ -22,7 +22,8 @@ composer require fredbradley/socs-php
 ## Example Usage
 
 ```php
-$socs = new FredBradley\SOCS\Calendar($socsId, $apiKey);
+$config = new FredBradley\SOCS\Config($socsId, $apiKey);
+$socs = new FredBradley\SOCS\Calendar($config);
 $xmlObject = $socs->getCalendar(\Carbon\Carbon::today(), \Carbon\Carbon::tomorrow()); // will get all the calendar items between today and tomorrow.
 ```
 Full docs will be released soon.
