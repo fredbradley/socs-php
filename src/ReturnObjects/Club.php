@@ -5,11 +5,17 @@ namespace FredBradley\SOCS\ReturnObjects;
 class Club
 {
     public $term;
+
     public $academicYear;
+
     public $category;
+
     public $clubId;
+
     public $clubName;
+
     public $gender;
+
     public $yearGroups;
 
     public function __construct($club)
@@ -24,8 +30,6 @@ class Club
     }
 
     /**
-     * @param  string  $yearGroups
-     *
      * @return \Illuminate\Support\Collection|string
      */
     private function getYearGroups(string $yearGroups)

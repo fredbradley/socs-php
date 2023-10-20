@@ -9,26 +9,16 @@ use FredBradley\SOCS\ReturnObjects\MusicLesson;
 
 /**
  * Class Tuition
- * @package FredBradley\SOCS
  */
 class Tuition extends SOCS
 {
-    /**
-     *
-     */
-    public const MUSIC = "musiclessons";
-    /**
-     *
-     */
-    public const SPORTSCOACHING = "sportscoaching";
-    /**
-     *
-     */
-    public const ACADEMIC = "academictutoring";
-    /**
-     *
-     */
-    public const PERFORMINGARTS = "performingarts";
+    public const MUSIC = 'musiclessons';
+
+    public const SPORTSCOACHING = 'sportscoaching';
+
+    public const ACADEMIC = 'academictutoring';
+
+    public const PERFORMINGARTS = 'performingarts';
 
     /**
      * @var array
@@ -41,9 +31,8 @@ class Tuition extends SOCS
     ];
 
     /**
-     * @param  \Carbon\CarbonInterface|null  $startDate
-     *
      * @return false|\SimpleXMLElement|string|null
+     *
      * @throws \Exception
      */
     public function getMusicLessons(CarbonInterface $startDate = null)
@@ -52,16 +41,14 @@ class Tuition extends SOCS
     }
 
     /**
-     * @param  string  $feed
-     * @param  \Carbon\CarbonInterface|null  $startDate
-     *
      * @return false|\SimpleXMLElement|string|null
+     *
      * @throws \Exception
      */
     private function getFeed(string $feed, CarbonInterface $startDate = null)
     {
         if (! in_array($feed, $this->dataFeeds)) {
-            throw new Exception("Unexpected data feed requested");
+            throw new Exception('Unexpected data feed requested');
         }
 
         if (is_null($startDate)) {
@@ -82,9 +69,8 @@ class Tuition extends SOCS
     }
 
     /**
-     * @param  \Carbon\CarbonInterface|null  $startDate
-     *
      * @return false|\SimpleXMLElement|string|null
+     *
      * @throws \Exception
      */
     public function getAcademicTutoring(CarbonInterface $startDate = null)
@@ -93,9 +79,8 @@ class Tuition extends SOCS
     }
 
     /**
-     * @param  \Carbon\CarbonInterface|null  $startDate
-     *
      * @return false|\SimpleXMLElement|string|null
+     *
      * @throws \Exception
      */
     public function getPerformingArts(CarbonInterface $startDate = null)
@@ -104,9 +89,8 @@ class Tuition extends SOCS
     }
 
     /**
-     * @param  \Carbon\CarbonInterface|null  $startDate
-     *
      * @return false|\SimpleXMLElement|string|null
+     *
      * @throws \Exception
      */
     public function getSportsCoaching(CarbonInterface $startDate = null)

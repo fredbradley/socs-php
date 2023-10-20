@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 
 /**
  * Class SOCS
- * @package FredBradley\SOCS
  */
 abstract class SOCS
 {
@@ -15,30 +14,16 @@ abstract class SOCS
      */
     protected const DATE_STRING = 'j M Y';
 
-    /**
-     * @var string
-     */
     protected string $baseUri = 'https://www.socscms.com/socs/xml/';
 
-    /**
-     * @var Client
-     */
     protected Client $client;
 
-    /**
-     * @var int
-     */
     private int $socsId;
 
-    /**
-     * @var string
-     */
     private string $apiKey;
 
     /**
      * SOCS constructor.
-     *
-     * @param  \FredBradley\SOCS\Config  $config
      */
     public function __construct(Config $config)
     {
@@ -47,9 +32,6 @@ abstract class SOCS
         $this->setClient();
     }
 
-    /**
-     * @return void
-     */
     protected function setClient(): void
     {
         $this->client = new Client([
@@ -57,11 +39,6 @@ abstract class SOCS
         ]);
     }
 
-    /**
-     * @param  array  $array
-     *
-     * @return array
-     */
     protected function loadQuery(array $array = []): array
     {
         $defaults = [
@@ -73,17 +50,13 @@ abstract class SOCS
     }
 
     /**
-     * @param  string  $uri
-     * @param  array  $options
-     * @param  string  $method
-     *
      * @return false|\SimpleXMLElement|string|null
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function getResponse(string $uri, array $options = [], string $method = 'GET')
     {
         $response = $this->client->request($method, $uri, $options);
-
 
         return simplexml_load_string($response->getBody()->getContents());
     }
@@ -92,7 +65,7 @@ abstract class SOCS
     {
         $array = [];
         foreach ($records as $record) {
-            $array[] = ((array)$record);
+            $array[] = ((array) $record);
         }
 
         return collect($array);

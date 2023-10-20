@@ -29,7 +29,7 @@ class CoCurricularTest extends BaseTest
     public function getRegisters()
     {
         $socs = new CoCurricular($this->config);
-        $result = $socs->getRegisters(Carbon::parse("2021-10-7"));
+        $result = $socs->getRegisters(Carbon::parse('2021-10-7'));
         $this->isIterableXmlObject($result);
         $this->assertObjectHasAttribute('pupil', $result);
     }

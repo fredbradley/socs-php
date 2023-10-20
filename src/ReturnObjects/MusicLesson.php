@@ -7,17 +7,21 @@ use Carbon\Carbon;
 class MusicLesson
 {
     public $pupilId;
+
     public $staffId;
+
     public $startTime;
+
     public $endTime;
+
     public $instrument;
+
     public $title;
+
     public $location;
+
     public $attendance;
 
-    /**
-     * @param $lesson
-     */
     public function __construct($lesson)
     {
         $this->pupilId = $lesson['pupilid'];
@@ -31,14 +35,12 @@ class MusicLesson
     }
 
     /**
-     * @param  string  $date
-     *
      * @return string
      */
     private function convertDate(string $date)
     {
-        $dateBits = explode("/", $date);
+        $dateBits = explode('/', $date);
 
-        return $dateBits[ 2 ].'-'.$dateBits[ 1 ].'-'.$dateBits[ 0 ];
+        return $dateBits[2].'-'.$dateBits[1].'-'.$dateBits[0];
     }
 }

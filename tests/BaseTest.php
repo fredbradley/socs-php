@@ -11,7 +11,9 @@ use SimpleXMLElement;
 class BaseTest extends TestCase
 {
     protected CarbonInterface $startDate;
+
     protected CarbonInterface $endDate;
+
     protected Config $config;
 
     public function setUp(): void

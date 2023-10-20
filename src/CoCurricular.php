@@ -8,24 +8,20 @@ use Illuminate\Support\Collection;
 
 /**
  * Class CoCurricular
- * @package FredBradley\SOCS
  */
 class CoCurricular extends SOCS
 {
-    /**
-     * @return Collection
-     */
     public function getClubs(bool $withPupils = false, bool $withStaff = false, bool $withPlanning = false): Collection
     {
         $query = [];
         if ($withPlanning) {
-            $query[ 'planning' ] = true;
+            $query['planning'] = true;
         }
         if ($withPupils) {
-            $query[ 'pupils' ] = true;
+            $query['pupils'] = true;
         }
         if ($withStaff) {
-            $query[ 'staff' ] = true;
+            $query['staff'] = true;
         }
 
         $options = $this->loadQuery(array_merge([
@@ -36,11 +32,8 @@ class CoCurricular extends SOCS
     }
 
     /**
-     * @param  \Carbon\CarbonInterface  $startDate
-     * @param  \Carbon\CarbonInterface  $endDate
-     * @param  bool  $staff
-     *
      * @return false|\SimpleXMLElement|string|null
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getEvents(CarbonInterface $startDate, CarbonInterface $endDate, bool $staff = false)
@@ -51,7 +44,7 @@ class CoCurricular extends SOCS
         ];
 
         if ($staff) {
-            $query[ 'staff' ] = true;
+            $query['staff'] = true;
         }
 
         $options = $this->loadQuery(array_merge([
@@ -62,9 +55,8 @@ class CoCurricular extends SOCS
     }
 
     /**
-     * @param  \Carbon\CarbonInterface|null  $startDate
-     *
      * @return false|\SimpleXMLElement|string|null
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getRegisters(CarbonInterface $startDate = null)
