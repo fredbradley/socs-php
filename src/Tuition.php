@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Exception;
 use FredBradley\SOCS\ReturnObjects\MusicLesson;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Collection;
 
 /**
  * Class Tuition
@@ -21,7 +23,7 @@ class Tuition extends SOCS
     public const PERFORMINGARTS = 'performingarts';
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $dataFeeds = [
         self::MUSIC,
@@ -33,19 +35,20 @@ class Tuition extends SOCS
     /**
      * @return false|\SimpleXMLElement|string|null
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getMusicLessons(CarbonInterface $startDate = null)
+    public function getMusicLessons(?CarbonInterface $startDate = null)
     {
         return $this->getFeed(self::MUSIC, $startDate);
     }
 
     /**
-     * @return false|\SimpleXMLElement|string|null
-     *
-     * @throws \Exception
+     * @param string $feed
+     * @param CarbonInterface|null $startDate
+     * @return Collection<array-key, MusicLesson>
+     * @throws GuzzleException
      */
-    private function getFeed(string $feed, CarbonInterface $startDate = null)
+    private function getFeed(string $feed, ?CarbonInterface $startDate = null): Collection
     {
         if (! in_array($feed, $this->dataFeeds)) {
             throw new Exception('Unexpected data feed requested');
@@ -57,6 +60,7 @@ class Tuition extends SOCS
 
         $query = [
             'startdate' => $startDate->format(self::DATE_STRING),
+            'enddate' => $startDate->addDays(7)->format(self::DATE_STRING),
         ];
 
         $options = $this->loadQuery(array_merge([
@@ -71,9 +75,9 @@ class Tuition extends SOCS
     /**
      * @return false|\SimpleXMLElement|string|null
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getAcademicTutoring(CarbonInterface $startDate = null)
+    public function getAcademicTutoring(?CarbonInterface $startDate = null)
     {
         return $this->getFeed(self::ACADEMIC, $startDate);
     }
@@ -81,9 +85,9 @@ class Tuition extends SOCS
     /**
      * @return false|\SimpleXMLElement|string|null
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getPerformingArts(CarbonInterface $startDate = null)
+    public function getPerformingArts(?CarbonInterface $startDate = null)
     {
         return $this->getFeed(self::PERFORMINGARTS, $startDate);
     }
@@ -91,9 +95,9 @@ class Tuition extends SOCS
     /**
      * @return false|\SimpleXMLElement|string|null
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getSportsCoaching(CarbonInterface $startDate = null)
+    public function getSportsCoaching(?CarbonInterface $startDate = null)
     {
         return $this->getFeed(self::SPORTSCOACHING, $startDate);
     }

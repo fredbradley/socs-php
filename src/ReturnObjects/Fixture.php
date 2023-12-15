@@ -6,52 +6,55 @@ use Carbon\Carbon;
 
 class Fixture
 {
-    public $eventId;
+    public int $eventId;
 
-    public $teamId;
+    public int $teamId;
 
-    public $sport;
+    public string $sport;
 
-    public $matchType;
+    public string $matchType;
 
-    public $opposition;
+    public string $opposition;
 
-    public $oppositionTeam;
+    public string $oppositionTeam;
 
-    public $dateTime;
+    public Carbon $dateTime;
 
-    public $location;
+    public string $location;
 
-    public $locationDetails;
+    public string $locationDetails;
 
-    public $latLng;
+    public string $latLng;
 
-    public $pointsFor;
+    public int $pointsFor;
 
-    public $pointsAgainst;
+    public int $pointsAgainst;
 
-    public $winner;
+    public string $winner;
 
-    public $result;
+    public string $result;
 
-    public $details;
+    public string $details;
 
-    public $url;
+    public string $url;
 
-    public $pupils;
+    /**
+     * @var array<string>
+     */
+    public array $pupils;
 
-    public function __construct($fixture)
+    public function __construct(\stdClass $fixture)
     {
-        $this->eventId = $fixture['eventid'];
-        $this->teamId = $fixture['teamid'];
-        $this->sport = $fixture['sport'];
-        $this->matchType = $fixture['matchtype'];
-        $this->opposition = $fixture['opposition'];
-        $this->oppositionTeam = $fixture['oppositionteam'];
-        $this->dateTime = $this->getDateTime($fixture['date'], $fixture['time']);
+        $this->eventId = $fixture->eventid;
+        $this->teamId = $fixture->teamid;
+        $this->sport = $fixture->sport;
+        $this->matchType = $fixture->matchtype;
+        $this->opposition = $fixture->opposition;
+        $this->oppositionTeam = $fixture->oppositionteam;
+        $this->dateTime = $this->getDateTime($fixture->date, $fixture->time);
     }
 
-    private function getDateTime(string $date, string $time)
+    private function getDateTime(string $date, string $time): Carbon|false
     {
         //        return $date." ".$time;
         $date = Carbon::createFromFormat('d/m/Y', $date)->toDateString();

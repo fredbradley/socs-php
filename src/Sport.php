@@ -26,14 +26,7 @@ class Sport extends SOCS
         bool $withTeamSheets = false
     ) {
         if ($withUnpublishedTeamSheets) {
-            $query = [
-                'TS' => 1,
-                'P' => 1,
-            ];
         } elseif ($withTeamSheets) {
-            $query = [
-                'TS' => 1,
-            ];
         }
 
         $query['startdate'] = $startDate->format(self::DATE_STRING);
@@ -70,13 +63,13 @@ class Sport extends SOCS
     }
 
     /**
-     * @return false|\SimpleXMLElement|string|null
+     * @psalm-return \Illuminate\Support\Collection<array-key, Fixture>
      */
     public function getFixturesAndResults(
         CarbonInterface $startDate,
         CarbonInterface $endDate,
         bool $withUnpublishedTeamSheets = false
-    ) {
+    ): \Illuminate\Support\Collection {
         if ($withUnpublishedTeamSheets) {
             $query['P'] = 1;
         }

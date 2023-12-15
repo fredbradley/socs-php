@@ -6,28 +6,28 @@ use Carbon\Carbon;
 
 class MusicLesson
 {
-    public $pupilId;
+    public string $pupilId;
 
-    public $staffId;
+    public string $staffId;
 
-    public $startTime;
+    public Carbon $startTime;
 
-    public $endTime;
+    public Carbon $endTime;
 
-    public $instrument;
+    public string $instrument;
 
-    public $title;
+    public string $title;
 
-    public $location;
+    public string $location;
 
-    public $attendance;
+    public mixed $attendance;
 
-    public function __construct($lesson)
+    public function __construct(\stdClass $lesson)
     {
         $this->pupilId = $lesson['pupilid'];
         $this->staffId = $lesson['staffid'];
         $this->startTime = Carbon::parse($this->convertDate($lesson['startdate']).' '.$lesson['starttime']);
-        $this->endTime = Carbon::parse($this->convertDate($lesson['startdate']).' '.$lesson['endtime']);
+        $this->endTime = Carbon::parse($this->convertDate($lesson['enddate']).' '.$lesson['endtime']);
         $this->instrument = $lesson['instrument'];
         $this->title = $lesson['title'];
         $this->location = $lesson['location'];
@@ -37,7 +37,7 @@ class MusicLesson
     /**
      * @return string
      */
-    private function convertDate(string $date)
+    private function convertDate(string $date): string
     {
         $dateBits = explode('/', $date);
 

@@ -17,16 +17,19 @@
     "require": {
         "php": "^8.2",
         "ext-simplexml": "*",
+        "ext-json": "*",
         "guzzlehttp/guzzle": "^7.3",
         "illuminate/support": "^7.0||^8.0||^9.0||^10.0",
-        "laravel/pint": "^1.13",
         "nesbot/carbon": "^2.0"
     },
     "require-dev": {
-        "vlucas/phpdotenv": "^4.0||^5.3",
-        "phpunit/phpunit": "^9.0",
+        "laravel/pint": "^1.13",
+        "nunomaduro/phpinsights": "^2.11",
+        "pestphp/pest": "^2.24",
+        "pestphp/pest-plugin-type-coverage": "^2.5",
+        "phpstan/phpstan": "^1.10",
         "spatie/ray": "^1.28",
-        "vimeo/psalm": "^4.8"
+        "vlucas/phpdotenv": "^4.0||^5.3"
     },
     "autoload": {
         "psr-4": {
@@ -39,12 +42,14 @@
         }
     },
     "scripts": {
-        "psalm": "vendor/bin/psalm --show-info=true",
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
