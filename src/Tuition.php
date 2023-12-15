@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS;
 
 use Carbon\Carbon;
@@ -25,7 +27,7 @@ class Tuition extends SOCS
     /**
      * @var array<string>
      */
-    private $dataFeeds = [
+    private array $dataFeeds = [
         self::MUSIC,
         self::SPORTSCOACHING,
         self::ACADEMIC,
@@ -33,19 +35,40 @@ class Tuition extends SOCS
     ];
 
     /**
-     * @return false|\SimpleXMLElement|string|null
-     *
      * @throws Exception
      */
-    public function getMusicLessons(?CarbonInterface $startDate = null)
+    public function getMusicLessons(?CarbonInterface $startDate = null): false|\SimpleXMLElement|string|null
     {
         return $this->getFeed(self::MUSIC, $startDate);
     }
 
     /**
-     * @param string $feed
-     * @param CarbonInterface|null $startDate
+     * @throws Exception
+     */
+    public function getAcademicTutoring(?CarbonInterface $startDate = null): false|\SimpleXMLElement|string|null
+    {
+        return $this->getFeed(self::ACADEMIC, $startDate);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getPerformingArts(?CarbonInterface $startDate = null): false|\SimpleXMLElement|string|null
+    {
+        return $this->getFeed(self::PERFORMINGARTS, $startDate);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getSportsCoaching(?CarbonInterface $startDate = null): false|\SimpleXMLElement|string|null
+    {
+        return $this->getFeed(self::SPORTSCOACHING, $startDate);
+    }
+
+    /**
      * @return Collection<array-key, MusicLesson>
+     *
      * @throws GuzzleException
      */
     private function getFeed(string $feed, ?CarbonInterface $startDate = null): Collection
@@ -70,35 +93,5 @@ class Tuition extends SOCS
         $response = $this->getResponse('tuition.ashx', ['query' => $options]);
 
         return $this->recordsToCollection($response)->mapInto(MusicLesson::class);
-    }
-
-    /**
-     * @return false|\SimpleXMLElement|string|null
-     *
-     * @throws Exception
-     */
-    public function getAcademicTutoring(?CarbonInterface $startDate = null)
-    {
-        return $this->getFeed(self::ACADEMIC, $startDate);
-    }
-
-    /**
-     * @return false|\SimpleXMLElement|string|null
-     *
-     * @throws Exception
-     */
-    public function getPerformingArts(?CarbonInterface $startDate = null)
-    {
-        return $this->getFeed(self::PERFORMINGARTS, $startDate);
-    }
-
-    /**
-     * @return false|\SimpleXMLElement|string|null
-     *
-     * @throws Exception
-     */
-    public function getSportsCoaching(?CarbonInterface $startDate = null)
-    {
-        return $this->getFeed(self::SPORTSCOACHING, $startDate);
     }
 }

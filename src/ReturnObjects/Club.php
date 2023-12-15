@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS\ReturnObjects;
 
 class Club
@@ -68,8 +70,6 @@ class Club
     }
 
     /**
-     * @return \Illuminate\Support\Collection|string
-     *
      * @psalm-return 'all'|\Illuminate\Support\Collection<int, int>
      */
     private function getYearGroups(string $yearGroups): \Illuminate\Support\Collection|string
@@ -78,10 +78,8 @@ class Club
             return $yearGroups;
         }
 
-        $collection = collect(explode(',', $yearGroups))->map(function ($item) {
+        return collect(explode(',', $yearGroups))->map(function ($item) {
             return (int) $item;
         });
-
-        return $collection;
     }
 }

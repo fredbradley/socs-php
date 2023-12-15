@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS;
 
 use GuzzleHttp\Client;
@@ -35,6 +37,19 @@ abstract class SOCS
         $this->setClient();
     }
 
+    /**
+     * @return Collection<array-key, mixed>
+     */
+    public function recordsToCollection(string|SimpleXMLElement|false|null $records): Collection
+    {
+        $array = [];
+        foreach ($records as $record) {
+            $array[] = ((array) $record);
+        }
+
+        return collect($array);
+    }
+
     protected function setClient(): void
     {
         $this->client = new Client([
@@ -43,9 +58,9 @@ abstract class SOCS
     }
 
     /**
-     * @return (int|mixed|string)[]
-     * @param array<string, mixed> $array
+     * @return array<int|mixed|string>
      *
+     * @param array<string, mixed> $array
      */
     protected function loadQuery(array $array = []): array
     {
@@ -58,32 +73,14 @@ abstract class SOCS
     }
 
     /**
-     * @return false|SimpleXMLElement|string|null
      * @param array<string, mixed> $options
-     * @param string $method
-     * @param string $uri
      *
      * @throws GuzzleException
      */
-    protected function getResponse(string $uri, array $options = [], string $method = 'GET')
+    protected function getResponse(string $uri, array $options = [], string $method = 'GET'): false|SimpleXMLElement|string|null
     {
         $response = $this->client->request($method, $uri, $options);
 
         return json_decode(json_encode(simplexml_load_string($response->getBody()->getContents())));
-    }
-
-    /**
-     * @param SimpleXMLElement|false|null|string $records
-     *
-     * @return Collection<array-key, mixed>
-     */
-    public function recordsToCollection(string|SimpleXMLElement|false|null $records): Collection
-    {
-        $array = [];
-        foreach ($records as $record) {
-            $array[] = ((array) $record);
-        }
-
-        return collect($array);
     }
 }

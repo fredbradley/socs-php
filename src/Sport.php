@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS;
 
 use Carbon\CarbonInterface;
@@ -15,16 +17,13 @@ class Sport extends SOCS
     /**
      * Note: if team sheets are included the feed will only show fixtures for
      * the previous and next 7 days regardless of any date ranges defined.
-     *
-     *
-     * @return false|\SimpleXMLElement|string|null
      */
     public function getStandardFixtures(
         CarbonInterface $startDate,
         CarbonInterface $endDate,
         bool $withUnpublishedTeamSheets = false,
         bool $withTeamSheets = false
-    ) {
+    ): false|\SimpleXMLElement|string|null {
         if ($withUnpublishedTeamSheets) {
         } elseif ($withTeamSheets) {
         }
@@ -36,13 +35,10 @@ class Sport extends SOCS
         return $this->getResponse('fixturecalendar.ashx', ['query' => $options]);
     }
 
-    /**
-     * @return false|\SimpleXMLElement|string|null
-     */
     public function getStandardResults(
         CarbonInterface $startDate,
         CarbonInterface $endDate
-    ) {
+    ): false|\SimpleXMLElement|string|null {
         $query['startdate'] = $startDate->format(self::DATE_STRING);
         $query['enddate'] = $endDate->format(self::DATE_STRING);
         $options = $this->loadQuery($query);
@@ -50,10 +46,7 @@ class Sport extends SOCS
         return $this->getResponse('results.ashx', ['query' => $options]);
     }
 
-    /**
-     * @return false|\SimpleXMLElement|string|null
-     */
-    public function getTeams()
+    public function getTeams(): false|\SimpleXMLElement|string|null
     {
         $query['data'] = 'teams';
 
@@ -82,6 +75,5 @@ class Sport extends SOCS
 
         //return $response;
         return $this->recordsToCollection($response)->mapInto(Fixture::class);
-
     }
 }

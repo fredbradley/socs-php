@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS;
 
 use Carbon\Carbon;
@@ -37,7 +39,7 @@ class CoCurricular extends SOCS
 
         $results = $this->getResponse('cocurricular.ashx', ['query' => $options]);
 
-        if (!isset($results->club)) {
+        if (! isset($results->club)) {
             return collect();
         }
         return collect($results->club)->mapInto(Club::class);
@@ -80,6 +82,7 @@ class CoCurricular extends SOCS
     /**
      * @throws GuzzleException
      * @throws Exception
+     *
      * @return Collection<string, string|object>
      */
     public function getRegisters(?CarbonInterface $startDate = null): Collection
@@ -98,7 +101,7 @@ class CoCurricular extends SOCS
 
         $response = $this->getResponse('cocurricular.ashx', ['query' => $options]);
 
-        if (!is_iterable($response)) {
+        if (! is_iterable($response)) {
             return collect();
         }
         return collect(collect($response)['pupil']);
@@ -117,15 +120,6 @@ class CoCurricular extends SOCS
         $clubs = $this->getClubs();
 
         return $clubs->where('clubId', $clubId)->first();
-    }
-
-    private function dateIfNull(?CarbonInterface $date = null): CarbonInterface
-    {
-        if (is_null($date)) {
-            $date = Carbon::today();
-        }
-
-        return $date;
     }
 
     public function getRegistrationDataForEvent(CarbonInterface $date, Event $event): Event
@@ -147,5 +141,14 @@ class CoCurricular extends SOCS
         $event->register = collect($allEvents->first())->where('eventid', $event->eventid);
 
         return $event;
+    }
+
+    private function dateIfNull(?CarbonInterface $date = null): CarbonInterface
+    {
+        if (is_null($date)) {
+            $date = Carbon::today();
+        }
+
+        return $date;
     }
 }

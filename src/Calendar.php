@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS;
 
 use Carbon\CarbonInterface;
@@ -10,8 +12,6 @@ use Carbon\CarbonInterface;
 class Calendar extends SOCS
 {
     /**
-     * @return false|\SimpleXMLElement|string|null
-     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getCalendar(
@@ -20,7 +20,7 @@ class Calendar extends SOCS
         bool $withSport = true,
         bool $withCoCurricular = true,
         bool $withSchoolCalendar = true
-    ) {
+    ): false|\SimpleXMLElement|string|null {
         $query = [];
         foreach (compact('withCoCurricular', 'withSchoolCalendar', 'withSport') as $key => $option) {
             if ($option === false) {

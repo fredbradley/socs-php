@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS\ReturnObjects;
 
 use Illuminate\Support\Collection;

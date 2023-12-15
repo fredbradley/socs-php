@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS\ReturnObjects;
 
 use Carbon\Carbon;
@@ -34,9 +36,6 @@ class MusicLesson
         $this->attendance = $lesson['attendance'];
     }
 
-    /**
-     * @return string
-     */
     private function convertDate(string $date): string
     {
         $dateBits = explode('/', $date);
