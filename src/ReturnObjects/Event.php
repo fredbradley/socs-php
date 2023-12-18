@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
 
 namespace FredBradley\SOCS\ReturnObjects;
 
 use Illuminate\Support\Collection;
+use SimpleXMLElement;
 
-class Event extends AbstractObject
+final class Event extends ReturnObject
 {
     public int $eventid;
+
     /**
-     * @var Collection<string,\SimpleXMLElement|string>|null
+     * @var Collection<string,SimpleXMLElement|string>|null
      */
     public ?Collection $register = null;
 
-    /**
-     * @param array<string,string>|\stdClass $event
-     */
-    public function __construct(array|\stdClass $event)
+    public function __construct(\stdClass $event)
     {
-        if (is_array($event)) {
-            foreach (array_keys($event) as $key) {
-                $this->{$key} = $event[$key];
-            }
-        } else {
-            foreach (get_object_vars($event) as $key => $value) {
+        foreach (get_object_vars($event) as $key => $value) {
+            if ($key === 'eventid') {
+                $this->{$key} = (int) $value;
+            } else {
                 $this->{$key} = $value;
             }
         }

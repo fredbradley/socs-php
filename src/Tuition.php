@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 /**
  * Class Tuition
  */
-class Tuition extends SOCS
+final class Tuition extends SOCS
 {
     public const MUSIC = 'musiclessons';
 
@@ -53,8 +53,9 @@ class Tuition extends SOCS
     /**
      * @throws Exception
      */
-    public function getPerformingArts(?CarbonInterface $startDate = null): false|\SimpleXMLElement|string|null
-    {
+    public function getPerformingArts(
+        ?CarbonInterface $startDate = null
+    ): false|\SimpleXMLElement|string|null {
         return $this->getFeed(self::PERFORMINGARTS, $startDate);
     }
 
@@ -92,6 +93,7 @@ class Tuition extends SOCS
 
         $response = $this->getResponse('tuition.ashx', ['query' => $options]);
 
-        return $this->recordsToCollection($response)->mapInto(MusicLesson::class);
+        return $this->recordsToCollection($response)
+            ->mapInto(MusicLesson::class);
     }
 }

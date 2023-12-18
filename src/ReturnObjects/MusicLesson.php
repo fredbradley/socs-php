@@ -6,7 +6,7 @@ namespace FredBradley\SOCS\ReturnObjects;
 
 use Carbon\Carbon;
 
-class MusicLesson
+final class MusicLesson
 {
     public string $pupilId;
 

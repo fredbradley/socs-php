@@ -9,7 +9,7 @@ use Carbon\CarbonInterface;
 /**
  * Class Calendar
  */
-class Calendar extends SOCS
+final class Calendar extends SOCS
 {
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException

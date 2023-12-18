@@ -42,7 +42,7 @@
         }
     },
     "scripts": {
-
+        "test": "./vendor/bin/pest --coverage"
     },
     "config": {
         "sort-packages": true,

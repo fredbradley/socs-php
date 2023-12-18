@@ -10,7 +10,7 @@ use FredBradley\SOCS\ReturnObjects\Fixture;
 /**
  * Class Sport
  */
-class Sport extends SOCS
+final class Sport extends SOCS
 {
     public string $baseUri = 'https://www.schoolssports.com/school/xml/';
 

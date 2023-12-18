@@ -6,7 +6,7 @@ namespace FredBradley\SOCS\ReturnObjects;
 
 use Carbon\Carbon;
 
-class Fixture
+final class Fixture
 {
     public int $eventId;
 

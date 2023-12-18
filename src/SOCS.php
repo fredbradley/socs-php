@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS;
 
 use GuzzleHttp\Client;
@@ -32,7 +34,10 @@ abstract class SOCS
     {
         $this->socsId = $config->socsId;
         $this->apiKey = $config->apiKey;
-        $this->setClient();
+
+        $this->client = new Client([
+            'base_uri' => $this->baseUri,
+        ]);
     }
 
     /**
@@ -42,23 +47,15 @@ abstract class SOCS
     {
         $array = [];
         foreach ($records as $record) {
-            $array[] = ((array)$record);
+            $array[] = ((array) $record);
         }
 
         return collect($array);
     }
 
-    protected function setClient(): void
-    {
-        $this->client = new Client([
-            'base_uri' => $this->baseUri,
-        ]);
-    }
-
     /**
-     * @param array<string, mixed> $array
+     * @param  array<string, mixed>  $array
      * @return array<int|mixed|string>
-     *
      */
     protected function loadQuery(array $array = []): array
     {
@@ -71,12 +68,15 @@ abstract class SOCS
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param  array<string, mixed>  $options
      *
      * @throws GuzzleException
      */
-    protected function getResponse(string $uri, array $options = [], string $method = 'GET'): false|SimpleXMLElement|string|null|\stdClass
-    {
+    protected function getResponse(
+        string $uri,
+        array $options = [],
+        string $method = 'GET'
+    ): false|SimpleXMLElement|string|null|\stdClass {
         $response = $this->client->request($method, $uri, $options);
 
         return json_decode(json_encode(simplexml_load_string($response->getBody()->getContents())));

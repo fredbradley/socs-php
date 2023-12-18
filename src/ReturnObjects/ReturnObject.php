@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FredBradley\SOCS\ReturnObjects;
 
-class AbstractObject
+abstract class ReturnObject
 {
     /**
      * @var array<string, mixed>

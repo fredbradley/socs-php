@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace FredBradley\SOCS\ReturnObjects;
 
-class Club
+use Illuminate\Support\Collection;
+
+final class Club
 {
     public string $term;
 
@@ -36,43 +38,43 @@ class Club
         $this->academicYear = (int) $club->academicyear;
         $this->category = $club->category;
         $this->clubId = (int) $club->clubid;
-        $this->clubName = trim(html_entity_decode($club->clubname));
+        $this->clubName = $this->getClubName($club->clubname);
         $this->gender = $club->gender;
         $this->yearGroups = $this->getYearGroups($club->yeargroups);
+
+        $this->pupils = 'Not Requested';
+        $this->staff = 'Not Requested';
+
         if (property_exists($club, 'pupils')) {
             $this->setPupils($club);
-        } else {
-            $this->pupils = 'Not Requested';
         }
         if (property_exists($club, 'staff')) {
             $this->setStaff($club);
-        } else {
-            $this->staff = 'Not Requested';
         }
+    }
+
+    private function getClubName(string $clubName): string
+    {
+        return trim(html_entity_decode($clubName));
     }
 
     private function setStaff(\stdClass $club): void
     {
+        $this->staff = 0;
         if (is_string($club->staff)) {
             $this->staff = explode(',', $club->staff);
-        } else {
-            $this->staff = 0;
         }
     }
 
     private function setPupils(\stdClass $club): void
     {
+        $this->pupils = 0;
         if (is_string($club->pupils)) {
             $this->pupils = explode(',', $club->pupils);
-        } else {
-            $this->pupils = 0;
         }
     }
 
-    /**
-     * @psalm-return 'all'|\Illuminate\Support\Collection<int, int>
-     */
-    private function getYearGroups(string $yearGroups): \Illuminate\Support\Collection|string
+    private function getYearGroups(string $yearGroups): Collection|string
     {
         if ($yearGroups === 'all') {
             return $yearGroups;

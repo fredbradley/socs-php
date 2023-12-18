@@ -17,7 +17,6 @@ it('has a config', function () {
         ->and($this->config->apiKey)->toBeString();
 });
 
-
 it('can load cocurricular', function () {
     $socs = new CoCurricular($this->config);
     expect($socs)->toBeInstanceOf(CoCurricular::class);
@@ -70,8 +69,6 @@ it('can get all registers', function () {
     expect($registers)->toBeInstanceOf(Collection::class);
 });
 
-
 test('example', function () {
     expect(true)->toBeTrue();
 });
-

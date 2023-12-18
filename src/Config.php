@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS;
 
 use Dotenv\Dotenv;
@@ -7,12 +9,12 @@ use Dotenv\Dotenv;
 /**
  * Class Config
  */
-class Config
+final class Config
 {
     /**
      * Config constructor.
      */
-    public function __construct(public int $socsId=0, public string $apiKey = 'SOCSAPIKEY')
+    public function __construct(public int $socsId = 0, public string $apiKey = 'SOCSAPIKEY')
     {
         $filename = dirname(__DIR__).'/.env';
         if (file_exists($filename)) {
