@@ -5,6 +5,7 @@ use FredBradley\SOCS\CoCurricular;
 use FredBradley\SOCS\Config;
 use FredBradley\SOCS\ReturnObjects\Club;
 use FredBradley\SOCS\ReturnObjects\Event;
+use FredBradley\SOCS\Tuition;
 use Illuminate\Support\Collection;
 
 beforeEach(function () {
@@ -68,7 +69,34 @@ it('can get all registers', function () {
     $registers = $socs->getRegisters(Carbon::now()->subDays(14));
     expect($registers)->toBeInstanceOf(Collection::class);
 });
-
-test('example', function () {
-    expect(true)->toBeTrue();
+it('can set staff and pupils', function () {
+    $socs = new CoCurricular($this->config);
+    $clubs = $socs->getClubs(true, true, false);
+    $club = $clubs->first();
+    expect($club)->toBeInstanceOf(Club::class)
+        ->and($club->staff)->toBeArray()->and($club->pupils)->toBeArray();
 });
+it('can get a return object property', function () {
+    $socs = new CoCurricular($this->config);
+    $clubs = $socs->getClubs(true, true, true);
+    $club = $clubs->first();
+    $club->testproperty = 'HELLO WORLD';
+    expect($club->testproperty)->toBeString()->and($club->testproperty)->toBe('HELLO WORLD');
+});
+it('can deal with pupils being non iterable', function () {
+    $socs = new CoCurricular($this->config);
+    $registers = $socs->getRegisters(Carbon::parse('2021-09-01'));
+    expect($registers)->toBeInstanceOf(Collection::class)->isEmpty();
+});
+it('can deal with response events not existing', function () {
+    $class = new ReflectionClass(CoCurricular::class);
+    $result = $class->getMethod('getCollectionOfEventsFromResponse')->invokeArgs(new CoCurricular($this->config), [new stdClass()]);
+    expect($result)->toBeInstanceOf(Collection::class)->isEmpty();
+});
+
+it('can deal with response clubs not existing', function () {
+    $class = new ReflectionClass(CoCurricular::class);
+    $result = $class->getMethod('returnClubsFromResponse')->invokeArgs(new CoCurricular($this->config), [new stdClass()]);
+    expect($result)->toBeInstanceOf(Collection::class)->isEmpty();
+});
+

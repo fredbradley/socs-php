@@ -6,7 +6,7 @@ namespace FredBradley\SOCS\ReturnObjects;
 
 use Illuminate\Support\Collection;
 
-final class Club
+final class Club extends ReturnObject
 {
     public string $term;
 

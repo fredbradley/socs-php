@@ -41,19 +41,6 @@ abstract class SOCS
     }
 
     /**
-     * @return Collection<array-key, mixed>
-     */
-    public function recordsToCollection(string|SimpleXMLElement|false|null $records): Collection
-    {
-        $array = [];
-        foreach ($records as $record) {
-            $array[] = ((array) $record);
-        }
-
-        return collect($array);
-    }
-
-    /**
      * @param  array<string, mixed>  $array
      * @return array<int|mixed|string>
      */
