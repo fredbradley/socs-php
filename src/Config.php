@@ -21,7 +21,7 @@ final class Config
             $dotenv = Dotenv::createImmutable(dirname(__DIR__), '.env');
             $dotenv->safeLoad();
         }
-        // Weird little hack because .env things everything is a string
+        // Weird little hack because .env thinks everything is a string
         $socsUserId = is_null($_SERVER['SOCSID']) ? null : (int) $_SERVER['SOCSID'];
 
         $this->socsId = $socsUserId ?? $socsId;

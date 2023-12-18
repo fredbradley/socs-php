@@ -15,6 +15,7 @@ it('has a config', function () {
     expect($this->config)->toBeInstanceOf(Config::class)
         ->and($this->config->socsId)->toBeInt()
         ->and($this->config->apiKey)->toBeString();
+
 });
 
 it('can load cocurricular', function () {
