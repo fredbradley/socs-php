@@ -1,60 +1,73 @@
 <?php
+
+use Carbon\Carbon;
+use FredBradley\SOCS\CoCurricular;
+use FredBradley\SOCS\Config;
+use FredBradley\SOCS\ReturnObjects\Club;
+use FredBradley\SOCS\ReturnObjects\Event;
+use Illuminate\Support\Collection;
+
 beforeEach(function () {
-    $this->config = new \FredBradley\SOCS\Config();
+    $this->config = new Config();
 });
 
 it('has a config', function () {
-    expect($this->config)->toBeInstanceOf(\FredBradley\SOCS\Config::class);
+    expect($this->config)->toBeInstanceOf(Config::class)
+        ->and($this->config->socsId)->toBeInt()
+        ->and($this->config->apiKey)->toBeString();
 });
-it('can load', function () {
-    $socs = new \FredBradley\SOCS\CoCurricular($this->config);
-    expect($socs)->toBeInstanceOf(\FredBradley\SOCS\CoCurricular::class);
+
+
+it('can load cocurricular', function () {
+    $socs = new CoCurricular($this->config);
+    expect($socs)->toBeInstanceOf(CoCurricular::class);
 });
 it('has clubs', function () {
-    $socs = new \FredBradley\SOCS\CoCurricular($this->config);
+    $socs = new CoCurricular($this->config);
     $clubs = $socs->getClubs();
-    expect($clubs)->toBeInstanceOf(\Illuminate\Support\Collection::class);
-    expect($clubs->first())->toBeInstanceOf(\FredBradley\SOCS\ReturnObjects\Club::class);
+    expect($clubs)->toBeInstanceOf(Collection::class)
+        ->and($clubs->first())->toBeInstanceOf(Club::class);
 });
 it('has events', function () {
-    $socs = new \FredBradley\SOCS\CoCurricular($this->config);
-    $events = $socs->getEvents(\Carbon\Carbon::now()->subDays(14), \Carbon\Carbon::now()->subDays(7));
-    expect($events)->toBeInstanceOf(\Illuminate\Support\Collection::class);
-    expect($events->first())->toBeInstanceOf(\FredBradley\SOCS\ReturnObjects\Event::class);
+    $socs = new CoCurricular($this->config);
+    $events = $socs->getEvents(Carbon::now()->subDays(14), Carbon::now()->subDays(7));
+    expect($events)->toBeInstanceOf(Collection::class)
+        ->and($events->first())->toBeInstanceOf(Event::class);
 });
 it('has registers', function () {
-    $socs = new \FredBradley\SOCS\CoCurricular($this->config);
-    $registers = $socs->getRegisters(\Carbon\Carbon::now()->subDays(14));
-    expect($registers)->toBeInstanceOf(\Illuminate\Support\Collection::class);
+    $socs = new CoCurricular($this->config);
+    $registers = $socs->getRegisters(Carbon::now()->subDays(14));
+    expect($registers)->toBeInstanceOf(Collection::class);
 });
 
 it('can get event by id', function () {
-    $socs = new \FredBradley\SOCS\CoCurricular($this->config);
-    $events = $socs->getEvents(\Carbon\Carbon::now()->subDays(14), \Carbon\Carbon::now()->subDays(7));
-
+    $socs = new CoCurricular($this->config);
+    $events = $socs->getEvents(Carbon::now()->subDays(300), Carbon::now()->addDays(7));
     $event = $socs->getEventById($events->first()->eventid);
-    dd($event);
-    expect($event)->toBeInstanceOf(\FredBradley\SOCS\ReturnObjects\Event::class);
+
+    expect($event)->toBeInstanceOf(Event::class);
 });
+
 it('can get club by id', function () {
-    $socs = new \FredBradley\SOCS\CoCurricular($this->config);
+    $socs = new CoCurricular($this->config);
     $clubs = $socs->getClubs();
     $club = $socs->getClubById($clubs->first()->clubId);
-    expect($club)->toBeInstanceOf(\FredBradley\SOCS\ReturnObjects\Club::class);
+    expect($club)->toBeInstanceOf(Club::class);
 });
 
 it('can get registration data for event', function () {
-    $socs = new \FredBradley\SOCS\CoCurricular($this->config);
-    $events = $socs->getEvents(\Carbon\Carbon::now()->subDays(14), \Carbon\Carbon::now()->addDays(7));
+    $socs = new CoCurricular($this->config);
+    $events = $socs->getEvents(Carbon::now()->subDays(14), Carbon::now()->addDays(7));
     $event = $socs->getEventById($events->first()->eventid);
-    $register = $socs->getRegistrationDataForEvent(\Carbon\Carbon::now(), $event);
-    expect($register)->toBeInstanceOf(\FredBradley\SOCS\ReturnObjects\Event::class);
-    expect($register->register)->toBeInstanceOf(\Illuminate\Support\Collection::class);
+    $register = $socs->getRegistrationDataForEvent(Carbon::now(), $event);
+    expect($register)->toBeInstanceOf(Event::class)
+        ->and($register->register)->toBeInstanceOf(Collection::class);
 });
+
 it('can get all registers', function () {
-    $socs = new \FredBradley\SOCS\CoCurricular($this->config);
-    $registers = $socs->getRegisters(\Carbon\Carbon::now()->subDays(14));
-    expect($registers)->toBeInstanceOf(\Illuminate\Support\Collection::class);
+    $socs = new CoCurricular($this->config);
+    $registers = $socs->getRegisters(Carbon::now()->subDays(14));
+    expect($registers)->toBeInstanceOf(Collection::class);
 });
 
 

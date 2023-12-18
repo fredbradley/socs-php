@@ -110,7 +110,7 @@ class CoCurricular extends SOCS
     public function getEventById(int $eventId, ?CarbonInterface $date = null): ?Event
     {
         $date = $this->dateIfNull($date);
-        $events = $this->getEvents($date, $date);
+        $events = $this->getEvents($date->toImmutable()->subYear(), $date->toImmutable()->addYear());
 
         return $events->where('eventid', $eventId)->first();
     }
