@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace FredBradley\SOCS;
 
 use GuzzleHttp\Client;
@@ -32,8 +30,8 @@ abstract class SOCS
      */
     public function __construct(Config $config)
     {
-        $this->socsId = (int) $config->socsId;
-        $this->apiKey = (string) $config->apiKey;
+        $this->socsId = $config->socsId;
+        $this->apiKey = $config->apiKey;
         $this->setClient();
     }
 
@@ -44,7 +42,7 @@ abstract class SOCS
     {
         $array = [];
         foreach ($records as $record) {
-            $array[] = ((array) $record);
+            $array[] = ((array)$record);
         }
 
         return collect($array);
@@ -58,9 +56,9 @@ abstract class SOCS
     }
 
     /**
+     * @param array<string, mixed> $array
      * @return array<int|mixed|string>
      *
-     * @param array<string, mixed> $array
      */
     protected function loadQuery(array $array = []): array
     {
@@ -77,7 +75,7 @@ abstract class SOCS
      *
      * @throws GuzzleException
      */
-    protected function getResponse(string $uri, array $options = [], string $method = 'GET'): false|SimpleXMLElement|string|null
+    protected function getResponse(string $uri, array $options = [], string $method = 'GET'): false|SimpleXMLElement|string|null|\stdClass
     {
         $response = $this->client->request($method, $uri, $options);
 
