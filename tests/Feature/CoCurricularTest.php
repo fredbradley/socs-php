@@ -5,7 +5,6 @@ use FredBradley\SOCS\CoCurricular;
 use FredBradley\SOCS\Config;
 use FredBradley\SOCS\ReturnObjects\Club;
 use FredBradley\SOCS\ReturnObjects\Event;
-use FredBradley\SOCS\Tuition;
 use Illuminate\Support\Collection;
 
 beforeEach(function () {
@@ -99,4 +98,3 @@ it('can deal with response clubs not existing', function () {
     $result = $class->getMethod('returnClubsFromResponse')->invokeArgs(new CoCurricular($this->config), [new stdClass()]);
     expect($result)->toBeInstanceOf(Collection::class)->isEmpty();
 });
-

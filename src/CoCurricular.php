@@ -37,7 +37,7 @@ final class CoCurricular extends SOCS
 
         $response = $this->getResponse('cocurricular.ashx', ['query' => $options]);
 
-        if (!isset($response->pupil) || ! is_iterable($response->pupil)) {
+        if (! isset($response->pupil) || ! is_iterable($response->pupil)) {
             return collect();
         }
 
@@ -104,19 +104,6 @@ final class CoCurricular extends SOCS
 
         return $this->returnClubsFromResponse($results);
     }
-    private function returnClubsFromResponse(object $response): Collection
-    {
-        if (! isset($response->club)) {
-            return collect();
-        }
-
-        $results = [];
-        foreach ($response->club as $club) {
-            $results[] = $club;
-        }
-
-        return collect($results)->mapInto(Club::class);
-    }
 
     public function getRegistrationDataForEvent(CarbonInterface $date, Event $event): Event
     {
@@ -133,6 +120,20 @@ final class CoCurricular extends SOCS
         $response = $this->getResponse('cocurricular.ashx', ['query' => $options]);
 
         return $this->addRegistrationDataToResponse($response, $event);
+    }
+
+    private function returnClubsFromResponse(object $response): Collection
+    {
+        if (! isset($response->club)) {
+            return collect();
+        }
+
+        $results = [];
+        foreach ($response->club as $club) {
+            $results[] = $club;
+        }
+
+        return collect($results)->mapInto(Club::class);
     }
 
     private function dateIfNull(?CarbonInterface $date = null): CarbonInterface

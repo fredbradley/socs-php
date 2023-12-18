@@ -6,7 +6,6 @@ namespace FredBradley\SOCS;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
 /**
