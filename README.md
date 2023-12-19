@@ -1,9 +1,9 @@
 # SOCS PHP
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fredbradley/socs-php.svg?style=flat-square)](https://packagist.org/packages/fredbradley/socs-php)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/fredbradley/socs-php/run-tests?label=tests)](https://github.com/fredbradley/socs-php/actions?query=workflow%3ATests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/fredbradley/socs-php/Check%20&%20fix%20styling?label=code%20style)](https://github.com/fredbradley/socs-php/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Tests](https://github.com/fredbradley/socs-php/actions/workflows/pest.yml/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/fredbradley/socs-php.svg?style=flat-square)](https://packagist.org/packages/fredbradley/socs-php)
+
 
 This is a PHP wrapper for the [SOCS](https://misocs.com) XML feeds. 
 
@@ -23,8 +23,14 @@ composer require fredbradley/socs-php
 
 ```php
 $config = new FredBradley\SOCS\Config($socsId, $apiKey);
-$socs = new FredBradley\SOCS\Calendar($config);
-$xmlObject = $socs->getCalendar(\Carbon\Carbon::today(), \Carbon\Carbon::tomorrow()); // will get all the calendar items between today and tomorrow.
+$socs = new FredBradley\SOCS\CoCurricular($config);
+
+// Get All Clubs from CoCurricular
+$clubs = $socs->getClubs();
+// Get all Events from CoCurricular
+$events = $socs->getEvents();
+
+// ... more documentation to follow
 ```
 Full docs will be released soon.
 
