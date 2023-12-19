@@ -17,7 +17,7 @@ it('has a config', function () {
         ->and($this->config->apiKey)->toBeString();
 
 });
-it('throws an excpetion if not json', function() {
+it('throws an excpetion if not json', function () {
     libxml_use_internal_errors(true); // surpress the risky warning
 
     $class = new ReflectionClass(CoCurricular::class);

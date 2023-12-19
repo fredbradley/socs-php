@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace FredBradley\SOCS\ReturnObjects;
 
+use FredBradley\SOCS\Traits\PupilsAndStaff;
 use Illuminate\Support\Collection;
 
 final class Club extends ReturnObject
 {
+    use PupilsAndStaff;
+
     public string $term;
 
     public int $academicYear;
@@ -42,15 +45,7 @@ final class Club extends ReturnObject
         $this->gender = $club->gender;
         $this->yearGroups = $this->getYearGroups($club->yeargroups);
 
-        $this->pupils = 'Not Requested';
-        $this->staff = 'Not Requested';
-
-        if (property_exists($club, 'pupils')) {
-            $this->setPupils($club);
-        }
-        if (property_exists($club, 'staff')) {
-            $this->setStaff($club);
-        }
+        $this->setPupilsAndStaff($club);
     }
 
     private function getClubName(string $clubName): string
@@ -58,24 +53,7 @@ final class Club extends ReturnObject
         return trim(html_entity_decode($clubName));
     }
 
-    private function setStaff(\stdClass $club): void
-    {
-        $this->staff = 0;
-        if (is_string($club->staff)) {
-            $this->staff = explode(',', $club->staff);
-        }
-    }
-
-    private function setPupils(\stdClass $club): void
-    {
-        $this->pupils = 0;
-        if (is_string($club->pupils)) {
-            $this->pupils = explode(',', $club->pupils);
-        }
-    }
-
     /**
-     * @param string $yearGroups
      * @return Collection<array-key, int>|string
      */
     private function getYearGroups(string $yearGroups): Collection|string

@@ -7,6 +7,7 @@ namespace FredBradley\SOCS;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Exception;
+use FredBradley\SOCS\ReturnObjects\Attendance;
 use FredBradley\SOCS\ReturnObjects\Club;
 use FredBradley\SOCS\ReturnObjects\Event;
 use GuzzleHttp\Exception\GuzzleException;
@@ -56,6 +57,7 @@ final class CoCurricular extends SOCS
 
     /**
      * @return Collection<string, Event>
+     *
      * @throws GuzzleException
      */
     public function getEvents(CarbonInterface $startDate, CarbonInterface $endDate): Collection
@@ -83,10 +85,8 @@ final class CoCurricular extends SOCS
     }
 
     /**
-     * @param bool $withPupils
-     * @param bool $withStaff
-     * @param bool $withPlanning
      * @return Collection<array-key, Club>
+     *
      * @throws GuzzleException
      */
     public function getClubs(
@@ -115,9 +115,6 @@ final class CoCurricular extends SOCS
     }
 
     /**
-     * @param CarbonInterface $date
-     * @param Event $event
-     * @return Event
      * @throws GuzzleException
      */
     public function getRegistrationDataForEvent(CarbonInterface $date, Event $event): Event
@@ -138,7 +135,6 @@ final class CoCurricular extends SOCS
     }
 
     /**
-     * @param object $response
      * @return Collection<array-key, Club>
      */
     private function returnClubsFromResponse(object $response): Collection
@@ -165,7 +161,6 @@ final class CoCurricular extends SOCS
     }
 
     /**
-     * @param object $response
      * @return Collection<array-key, Event>
      */
     private function getCollectionOfEventsFromResponse(object $response): Collection
@@ -179,19 +174,32 @@ final class CoCurricular extends SOCS
             $results[] = $event;
         }
 
-        return collect($results)->mapInto(Event::class);
+        return collect($results)->mapInto(Event::class)->map(function ($item) {
+            $date = Carbon::createFromFormat('d/m/Y', $item->startdate);
+            $registrationData = $this->getRegistrationDataForEvent($date, $item);
+            $item->register = $registrationData->register->values();
+
+            return $item;
+        });
     }
 
     /**
-     * @param Arrayable<array-key,mixed>|iterable|null $response
-     * @param Event $event
-     * @return Event
+     * @param  Arrayable<array-key,mixed>|iterable|null  $response
      */
     private function addRegistrationDataToResponse(Arrayable|\stdClass|iterable|null $response, Event $event): Event
     {
         $allEvents = collect($response);
 
-        $event->register = collect($allEvents->first())->where('eventid', $event->eventid);
+        $event->register = collect($allEvents->first())->where('eventid', $event->eventid)->map(function ($item) {
+            unset($item->eventid);
+            if ($item->attendance instanceof \stdClass) {
+                $item->attendance = Attendance::NOT_SET;
+            } else {
+                $item->attendance = Attendance::from($item->attendance);
+            }
+
+            return $item;
+        });
 
         return $event;
     }

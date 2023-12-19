@@ -16,14 +16,14 @@ final class Config
      */
     public function __construct(public int $socsId = 0, public string $apiKey = 'SOCSAPIKEY')
     {
-        $filename = dirname(__DIR__) . '/.env';
+        $filename = dirname(__DIR__).'/.env';
         if (file_exists($filename)) {
             $dotenv = Dotenv::createImmutable(dirname(__DIR__), '.env');
             $dotenv->safeLoad();
         }
         // Weird little hack because .env thinks everything is a string
         if (isset($_SERVER['SOCSID'])) {
-            $socsUserId = is_null($_SERVER['SOCSID']) ? null : (int)$_SERVER['SOCSID'];
+            $socsUserId = is_null($_SERVER['SOCSID']) ? null : (int) $_SERVER['SOCSID'];
         } else {
             $socsUserId = null;
         }

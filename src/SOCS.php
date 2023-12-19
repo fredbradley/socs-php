@@ -7,7 +7,6 @@ namespace FredBradley\SOCS;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use JsonSchema\Exception\JsonDecodingException;
 use SimpleXMLElement;
 
 /**
@@ -56,7 +55,7 @@ abstract class SOCS
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param  array<string, mixed>  $options
      *
      * @throws GuzzleException
      * @throws Exception
@@ -72,9 +71,10 @@ abstract class SOCS
 
         $json = json_encode($xml);
 
-        if ($json===false || $xml===false) {
-            throw new Exception("Unable to read XML", 422);
+        if ($json === false || $xml === false) {
+            throw new Exception('Unable to read XML', 422);
         }
+
         return json_decode($json);
     }
 }
