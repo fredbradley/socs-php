@@ -74,6 +74,10 @@ final class Club extends ReturnObject
         }
     }
 
+    /**
+     * @param string $yearGroups
+     * @return Collection<array-key, int>|string
+     */
     private function getYearGroups(string $yearGroups): Collection|string
     {
         if ($yearGroups === 'all') {

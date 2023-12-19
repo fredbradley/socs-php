@@ -10,6 +10,7 @@ use Exception;
 use FredBradley\SOCS\ReturnObjects\Club;
 use FredBradley\SOCS\ReturnObjects\Event;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
 /**
@@ -54,6 +55,7 @@ final class CoCurricular extends SOCS
     }
 
     /**
+     * @return Collection<string, Event>
      * @throws GuzzleException
      */
     public function getEvents(CarbonInterface $startDate, CarbonInterface $endDate): Collection
@@ -80,6 +82,13 @@ final class CoCurricular extends SOCS
         return $clubs->where('clubId', $clubId)->first();
     }
 
+    /**
+     * @param bool $withPupils
+     * @param bool $withStaff
+     * @param bool $withPlanning
+     * @return Collection<array-key, Club>
+     * @throws GuzzleException
+     */
     public function getClubs(
         bool $withPupils = false,
         bool $withStaff = false,
@@ -105,6 +114,12 @@ final class CoCurricular extends SOCS
         return $this->returnClubsFromResponse($results);
     }
 
+    /**
+     * @param CarbonInterface $date
+     * @param Event $event
+     * @return Event
+     * @throws GuzzleException
+     */
     public function getRegistrationDataForEvent(CarbonInterface $date, Event $event): Event
     {
         $date = $this->dateIfNull($date);
@@ -122,6 +137,10 @@ final class CoCurricular extends SOCS
         return $this->addRegistrationDataToResponse($response, $event);
     }
 
+    /**
+     * @param object $response
+     * @return Collection<array-key, Club>
+     */
     private function returnClubsFromResponse(object $response): Collection
     {
         if (! isset($response->club)) {
@@ -145,6 +164,10 @@ final class CoCurricular extends SOCS
         return $date;
     }
 
+    /**
+     * @param object $response
+     * @return Collection<array-key, Event>
+     */
     private function getCollectionOfEventsFromResponse(object $response): Collection
     {
         if (! isset($response->event)) {
@@ -159,7 +182,12 @@ final class CoCurricular extends SOCS
         return collect($results)->mapInto(Event::class);
     }
 
-    private function addRegistrationDataToResponse(object $response, Event $event): Event
+    /**
+     * @param Arrayable<array-key,mixed>|iterable|null $response
+     * @param Event $event
+     * @return Event
+     */
+    private function addRegistrationDataToResponse(Arrayable|\stdClass|iterable|null $response, Event $event): Event
     {
         $allEvents = collect($response);
 

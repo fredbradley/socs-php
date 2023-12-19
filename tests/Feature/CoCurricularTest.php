@@ -17,6 +17,13 @@ it('has a config', function () {
         ->and($this->config->apiKey)->toBeString();
 
 });
+it('throws an excpetion if not json', function() {
+    libxml_use_internal_errors(true); // surpress the risky warning
+
+    $class = new ReflectionClass(CoCurricular::class);
+    $class->getMethod('getResponse')
+        ->invokeArgs(new CoCurricular($this->config), ['cocurricular.ashx', ['query' => ['data' => 'clubs']]]);
+})->throws(Exception::class, 'Unable to read XML');
 
 it('can load cocurricular', function () {
     $socs = new CoCurricular($this->config);

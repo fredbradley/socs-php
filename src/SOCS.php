@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace FredBradley\SOCS;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use JsonSchema\Exception\JsonDecodingException;
 use SimpleXMLElement;
 
 /**
@@ -54,9 +56,10 @@ abstract class SOCS
     }
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      *
      * @throws GuzzleException
+     * @throws Exception
      */
     protected function getResponse(
         string $uri,
@@ -65,6 +68,13 @@ abstract class SOCS
     ): false|SimpleXMLElement|string|null|\stdClass {
         $response = $this->client->request($method, $uri, $options);
 
-        return json_decode(json_encode(simplexml_load_string($response->getBody()->getContents())));
+        $xml = simplexml_load_string($response->getBody()->getContents());
+
+        $json = json_encode($xml);
+
+        if ($json===false || $xml===false) {
+            throw new Exception("Unable to read XML", 422);
+        }
+        return json_decode($json);
     }
 }
