@@ -25,16 +25,6 @@ final class Club extends ReturnObject
 
     public mixed $yearGroups;
 
-    /**
-     * @var string|array<string>|int
-     */
-    public string|array|int $pupils;
-
-    /**
-     * @var string|array<string>|int
-     */
-    public string|array|int $staff;
-
     public function __construct(\stdClass $club)
     {
         $this->term = $club->term;
@@ -44,7 +34,6 @@ final class Club extends ReturnObject
         $this->clubName = $this->getClubName($club->clubname);
         $this->gender = $club->gender;
         $this->yearGroups = $this->getYearGroups($club->yeargroups);
-
         $this->setPupilsAndStaff($club);
     }
 

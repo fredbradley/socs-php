@@ -78,17 +78,14 @@ it('can get all registers', function () {
 });
 it('can set staff and pupils', function () {
     $socs = new CoCurricular($this->config);
-    $clubs = $socs->getClubs(true, true, false);
-    $club = $clubs->first();
-    expect($club)->toBeInstanceOf(Club::class)
-        ->and($club->staff)->toBeArray()->and($club->pupils)->toBeArray();
-});
-it('can get a return object property', function () {
-    $socs = new CoCurricular($this->config);
     $clubs = $socs->getClubs(true, true, true);
     $club = $clubs->first();
+    expect($club)->toBeInstanceOf(Club::class)
+        ->and($club->staff)->toBeIterable()->and($club->pupils)->toBeIterable();
+
     $club->testproperty = 'HELLO WORLD';
-    expect($club->testproperty)->toBeString()->and($club->testproperty)->toBe('HELLO WORLD');
+    expect($club->testproperty)->toBeString()
+        ->and($club->testproperty)->toBe('HELLO WORLD');
 });
 it('can deal with pupils being non iterable', function () {
     $socs = new CoCurricular($this->config);

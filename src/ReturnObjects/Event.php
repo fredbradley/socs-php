@@ -32,11 +32,4 @@ final class Event extends ReturnObject
         }
         $this->setPupilsAndStaff($event);
     }
-
-    private function loadRegister(): void
-    {
-        if ($this->register === null) {
-
-        }
-    }
 }

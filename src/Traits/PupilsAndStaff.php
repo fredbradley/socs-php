@@ -2,8 +2,20 @@
 
 namespace FredBradley\SOCS\Traits;
 
+use Illuminate\Support\Collection;
+
 trait PupilsAndStaff
 {
+    /**
+     * @var string|Collection<string>|int
+     */
+    public string|Collection|int $pupils;
+
+    /**
+     * @var string|Collection<string>|int
+     */
+    public string|Collection|int $staff;
+
     public function setPupilsAndStaff(\stdClass $object)
     {
         $this->pupils = 'Not Requested';
