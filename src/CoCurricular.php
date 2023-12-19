@@ -79,7 +79,7 @@ final class CoCurricular extends SOCS
 
     public function getClubById(int $clubId): ?Club
     {
-        $clubs = $this->getClubs();
+        $clubs = $this->getClubs(true, true, true);
 
         return $clubs->where('clubId', $clubId)->first();
     }
