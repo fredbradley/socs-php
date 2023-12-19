@@ -37,7 +37,7 @@ final class Tuition extends SOCS
     /**
      * @throws Exception
      */
-    public function getMusicLessons(?CarbonInterface $startDate = null): false|\SimpleXMLElement|string|null
+    public function getMusicLessons(?CarbonInterface $startDate = null): Collection
     {
         return $this->getFeed(self::MUSIC, $startDate);
     }
@@ -93,7 +93,11 @@ final class Tuition extends SOCS
 
         $response = $this->getResponse('tuition.ashx', ['query' => $options]);
 
-        return $this->recordsToCollection($response)
+        if (! isset($response->lesson)) {
+            return collect();
+        }
+
+        return collect($response->lesson)
             ->mapInto(MusicLesson::class);
     }
 }
