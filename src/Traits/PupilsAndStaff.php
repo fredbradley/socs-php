@@ -7,14 +7,14 @@ use Illuminate\Support\Collection;
 trait PupilsAndStaff
 {
     /**
-     * @var string|Collection<string>|int
+     * @var string|Collection<string>|\stdClass|int
      */
-    public string|Collection|int $pupils;
+    public string|Collection|\stdClass|int $pupils;
 
     /**
-     * @var string|Collection<string>|int
+     * @var string|Collection<string>|\stdClass|int
      */
-    public string|Collection|int $staff;
+    public string|Collection|\stdClass|int $staff;
 
     public function setPupilsAndStaff(\stdClass $object)
     {
