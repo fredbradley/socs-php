@@ -31,7 +31,7 @@ trait PupilsAndStaff
 
     private function setStaff(\stdClass $club): void
     {
-        $this->staff = 0;
+        $this->staff = collect();
         if (is_string($club->staff)) {
             $this->staff = collect(explode(',', $club->staff));
         }
@@ -39,7 +39,7 @@ trait PupilsAndStaff
 
     private function setPupils(\stdClass $club): void
     {
-        $this->pupils = 0;
+        $this->pupils = collect();
         if (is_string($club->pupils)) {
             $this->pupils = collect(explode(',', $club->pupils));
         }
