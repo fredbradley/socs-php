@@ -26,6 +26,8 @@ final class Event extends ReturnObject
         foreach (get_object_vars($event) as $key => $value) {
             if (in_array($key, ['eventid', 'clubid'])) {
                 $this->{$key} = (int) $value;
+            } elseif ($key === 'title') {
+                $this->{$key} = html_entity_decode($value);
             } else {
                 $this->{$key} = $value;
             }
