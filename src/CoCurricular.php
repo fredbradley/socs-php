@@ -173,7 +173,7 @@ final class CoCurricular extends SOCS
          * Needed to make sure that the response is always an array
          * (if there's only one event, SOCS returns a singular object)
          */
-        if (!is_array($response->event)) {
+        if (! is_array($response->event)) {
             $response->event = [$response->event];
         }
 

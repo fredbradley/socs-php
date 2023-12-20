@@ -18,6 +18,7 @@ enum Attendance: string
             default => 'default',
         };
     }
+
     public function label(): string
     {
         return match ($this) {
