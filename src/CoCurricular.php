@@ -169,6 +169,14 @@ final class CoCurricular extends SOCS
             return collect();
         }
 
+        /**
+         * Needed to make sure that the response is always an array
+         * (if there's only one event, SOCS returns a singular object)
+         */
+        if (!is_array($response->event)) {
+            $response->event = [$response->event];
+        }
+
         $results = [];
         foreach ($response->event as $event) {
             $results[] = $event;
