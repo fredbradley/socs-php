@@ -24,8 +24,9 @@ final class MusicLesson
 
     public string $attendance;
 
-    public function __construct(\stdClass $lesson)
+    public function __construct(array $lesson)
     {
+        $lesson = (object) $lesson;
         $enddate = isset($lesson->enddate) ? $lesson->enddate : $lesson->startdate;
         $this->pupilId = $lesson->pupilid;
         $this->staffId = $lesson->staffid;

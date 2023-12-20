@@ -16,11 +16,12 @@
     ],
     "require": {
         "php": "^8.2",
-        "ext-simplexml": "*",
         "ext-json": "*",
+        "ext-simplexml": "*",
         "guzzlehttp/guzzle": "^7.3",
         "illuminate/support": "^7.0||^8.0||^9.0||^10.0",
-        "nesbot/carbon": "^2.0"
+        "nesbot/carbon": "^2.0",
+        "saloonphp/xml-wrangler": "^1.2"
     },
     "require-dev": {
         "laravel/pint": "^1.13",

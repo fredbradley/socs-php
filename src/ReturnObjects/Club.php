@@ -23,23 +23,23 @@ final class Club extends ReturnObject
 
     public string $gender;
 
-    public mixed $yearGroups;
+    public string|Collection $yearGroups;
 
-    public function __construct(\stdClass $club)
+    public function __construct(array $club)
     {
-        $this->term = $club->term;
-        $this->academicYear = (int) $club->academicyear;
-        $this->category = $club->category;
-        $this->clubId = (int) $club->clubid;
-        $this->clubName = $this->getClubName($club->clubname);
-        $this->gender = $club->gender;
-        $this->yearGroups = $this->getYearGroups($club->yeargroups);
+        $this->term = $club['term'];
+        $this->academicYear = (int) $club['academicyear'];
+        $this->category = $club['category'];
+        $this->clubId = (int) $club['clubid'];
+        $this->clubName = $this->getClubName($club['clubname']);
+        $this->gender = $club['gender'];
+        $this->yearGroups = $this->getYearGroups($club['yeargroups']);
         $this->setPupilsAndStaff($club);
     }
 
     private function getClubName(string $clubName): string
     {
-        return trim(html_entity_decode($clubName));
+        return trim($clubName);
     }
 
     /**

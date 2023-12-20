@@ -92,12 +92,9 @@ final class Tuition extends SOCS
         ], $query));
 
         $response = $this->getResponse('tuition.ashx', ['query' => $options]);
+        $lessons = $response->value('lesson')->collect();
 
-        if (! isset($response->lesson)) {
-            return collect();
-        }
-
-        return collect($response->lesson)
+        return $lessons
             ->mapInto(MusicLesson::class);
     }
 }

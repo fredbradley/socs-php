@@ -7,7 +7,7 @@ namespace FredBradley\SOCS;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use SimpleXMLElement;
+use Saloon\XmlWrangler\XmlReader;
 
 /**
  * Class SOCS
@@ -64,10 +64,14 @@ abstract class SOCS
         string $uri,
         array $options = [],
         string $method = 'GET'
-    ): false|SimpleXMLElement|string|null|\stdClass {
+    ) {
+
         $response = $this->client->request($method, $uri, $options);
 
-        $xml = simplexml_load_string($response->getBody()->getContents());
+        $xml = XmlReader::fromString($response->getBody()->getContents());
+
+        //$xml = simplexml_load_string($response->getBody()->getContents());
+        return $xml;
 
         $json = json_encode($xml);
 

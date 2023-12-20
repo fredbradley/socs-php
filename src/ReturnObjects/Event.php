@@ -21,13 +21,11 @@ final class Event extends ReturnObject
      */
     public ?Collection $register = null;
 
-    public function __construct(\stdClass $event)
+    public function __construct(array $event)
     {
-        foreach (get_object_vars($event) as $key => $value) {
+        foreach ($event as $key => $value) {
             if (in_array($key, ['eventid', 'clubid'])) {
                 $this->{$key} = (int) $value;
-            } elseif ($key === 'title') {
-                $this->{$key} = html_entity_decode($value);
             } else {
                 $this->{$key} = $value;
             }

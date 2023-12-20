@@ -11,8 +11,11 @@ use FredBradley\SOCS\ReturnObjects\Attendance;
 use FredBradley\SOCS\ReturnObjects\Club;
 use FredBradley\SOCS\ReturnObjects\Event;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
+use Saloon\XmlWrangler\Exceptions\QueryAlreadyReadException;
+use Saloon\XmlWrangler\Exceptions\XmlReaderException;
+use Saloon\XmlWrangler\XmlReader;
+use Throwable;
 
 /**
  * Class CoCurricular
@@ -49,8 +52,16 @@ final class CoCurricular extends SOCS
 
     public function getEventById(int $eventId, ?CarbonInterface $date = null): ?Event
     {
+        if (is_null($date)) {
+            $dateWasNull = true;
+        }
         $date = $this->dateIfNull($date);
-        $events = $this->getEvents($date->toImmutable()->subYear(), $date->toImmutable()->addYear());
+        if (isset($dateWasNull)) {
+            // TODO: this seems to time out since using XmlReader / XmlWrangler (dataset too big to iterate?)
+            $events = $this->getEvents($date->toImmutable()->subYear(), $date->toImmutable()->addYear());
+        } else {
+            $events = $this->getEvents($date, $date);
+        }
 
         return $events->where('eventid', $eventId)->first();
     }
@@ -60,7 +71,7 @@ final class CoCurricular extends SOCS
      *
      * @throws GuzzleException
      */
-    public function getEvents(CarbonInterface $startDate, CarbonInterface $endDate): Collection
+    public function getEvents(CarbonInterface $startDate, CarbonInterface $endDate)
     {
         $query = [
             'startdate' => $startDate->format(self::DATE_STRING),
@@ -137,18 +148,11 @@ final class CoCurricular extends SOCS
     /**
      * @return Collection<array-key, Club>
      */
-    private function returnClubsFromResponse(object $response): Collection
+    private function returnClubsFromResponse(XmlReader $response): Collection
     {
-        if (! isset($response->club)) {
-            return collect();
-        }
+        $results = $response->value('club')->collect();
 
-        $results = [];
-        foreach ($response->club as $club) {
-            $results[] = $club;
-        }
-
-        return collect($results)->mapInto(Club::class);
+        return $results->mapInto(Club::class);
     }
 
     private function dateIfNull(?CarbonInterface $date = null): CarbonInterface
@@ -163,26 +167,11 @@ final class CoCurricular extends SOCS
     /**
      * @return Collection<array-key, Event>
      */
-    private function getCollectionOfEventsFromResponse(object $response): Collection
+    private function getCollectionOfEventsFromResponse(XmlReader $response): Collection
     {
-        if (! isset($response->event)) {
-            return collect();
-        }
+        $results = $response->value('event')->collect();
 
-        /**
-         * Needed to make sure that the response is always an array
-         * (if there's only one event, SOCS returns a singular object)
-         */
-        if (! is_array($response->event)) {
-            $response->event = [$response->event];
-        }
-
-        $results = [];
-        foreach ($response->event as $event) {
-            $results[] = $event;
-        }
-
-        return collect($results)->mapInto(Event::class)->map(function ($item) {
+        return $results->mapInto(Event::class)->map(function ($item) {
             $date = Carbon::createFromFormat('d/m/Y', $item->startdate);
             $registrationData = $this->getRegistrationDataForEvent($date, $item);
             $item->register = $registrationData->register->values();
@@ -192,19 +181,18 @@ final class CoCurricular extends SOCS
     }
 
     /**
-     * @param  Arrayable<array-key,mixed>|iterable|null  $response
+     * @throws QueryAlreadyReadException
+     * @throws XmlReaderException
+     * @throws Throwable
      */
-    private function addRegistrationDataToResponse(Arrayable|\stdClass|iterable|null $response, Event $event): Event
+    private function addRegistrationDataToResponse(XmlReader $registrationResponse, Event $event): Event
     {
-        $allEvents = collect($response);
+        $events = $registrationResponse->value('pupil')->collect();
 
-        $event->register = collect($allEvents->first())->where('eventid', $event->eventid)->map(function ($item) {
-            unset($item->eventid);
-            if ($item->attendance instanceof \stdClass) {
-                $item->attendance = Attendance::NOT_SET;
-            } else {
-                $item->attendance = Attendance::from($item->attendance);
-            }
+        $event->register = $events->where('eventid', $event->eventid)->map(function ($item) {
+            unset($item['eventid']);
+
+            $item['attendance'] = Attendance::from($item->attendance ?? '');
 
             return $item;
         });
