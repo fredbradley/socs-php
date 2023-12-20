@@ -15,7 +15,7 @@ enum Attendance: string
             self::ATTENDED => 'success',
             self::ABSENT => 'danger',
             self::AUTHORISED => 'warning',
-            default => 'secondary',
+            default => 'default',
         };
     }
     public function label(): string
