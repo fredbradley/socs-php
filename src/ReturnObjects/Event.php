@@ -35,10 +35,16 @@ final class Event extends ReturnObject
         $this->setPupilsAndStaff($event);
     }
 
+    /**
+     * This feels really hacky, but we believe it's the only way.
+     * SOCS's XML feed doesn't encode the ampersand properly,
+     * resulting in '&amp;amp;' appearing in the XML, which
+     * we can't decode properly. So here we are replacing
+     * '&amp;' with '+' (and then trimming the result).
+     */
     private function getEventTitle(string $title): string
     {
-        $clean = (html_entity_decode($title));
-        $title = str_replace('&', '&amp;', $clean);
+        $title = str_replace('&amp;', '+', $title);
 
         return trim($title);
     }
