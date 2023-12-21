@@ -190,9 +190,10 @@ final class CoCurricular extends SOCS
         $events = $registrationResponse->value('pupil')->collect();
 
         $event->register = $events->where('eventid', $event->eventid)->map(function ($item) {
-            unset($item['eventid']);
+            $item = (object) $item; // TODO: this is a bit too hacky for my liking - but it works!
+            unset($item->eventid);
 
-            $item['attendance'] = Attendance::from($item->attendance ?? '');
+            $item->attendance = Attendance::from($item->attendance ?? '');
 
             return $item;
         });
