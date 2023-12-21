@@ -1,7 +1,3 @@
 # Changelog
 
-All notable changes to `socs-php` will be documented in this file.
-
-## 1.0.0 - 202X-XX-XX
-
-- initial release
+Please refer to the changelog listed on the releases page for more information on what has changed with each version.
