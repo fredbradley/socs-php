@@ -13,3 +13,4 @@ vendor
 .php-cs-fixer.cache
 .env
 phpunit.xml
+.phpactor.json
