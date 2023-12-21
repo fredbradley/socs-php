@@ -8,7 +8,16 @@ use FredBradley\SOCS\ReturnObjects\Event;
 use Illuminate\Support\Collection;
 
 beforeEach(function () {
-    $this->config = new Config();
+    $this->config = new Config(
+        socsId: (int) $_ENV['SOCSID'],
+        apiKey: $_ENV['SOCSAPIKEY']
+    );
+});
+
+it('calculates todays date correctly', function () {
+    $socs = new CoCurricular($this->config);
+    $registers = $socs->getRegisters(null);
+    expect($registers)->toBeInstanceOf(Collection::class);
 });
 
 it('has a config', function () {

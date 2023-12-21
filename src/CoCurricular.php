@@ -42,12 +42,11 @@ final class CoCurricular extends SOCS
 
         $response = $this->getResponse('cocurricular.ashx', ['query' => $options]);
 
-        if (! isset($response->pupil) || ! is_iterable($response->pupil)) {
-            return collect();
-        }
+        return $response->value('pupil')->collect()->map(function (array $item) {
+            $item = (object) $item;
 
-        return collect(collect($response)['pupil'])
-            ->groupBy('eventid');
+            return $item;
+        })->groupBy('eventid');
     }
 
     public function getEventById(int $eventId, ?CarbonInterface $date = null): ?Event
@@ -171,7 +170,7 @@ final class CoCurricular extends SOCS
     {
         $results = $response->value('event')->collect();
 
-        return $results->mapInto(Event::class)->map(function ($item) {
+        return $results->mapInto(Event::class)->map(function (Event $item) {
             $date = Carbon::createFromFormat('d/m/Y', $item->startdate);
             $registrationData = $this->getRegistrationDataForEvent($date, $item);
             $item->register = $registrationData->register->values();
@@ -189,7 +188,7 @@ final class CoCurricular extends SOCS
     {
         $events = $registrationResponse->value('pupil')->collect();
 
-        $event->register = $events->where('eventid', $event->eventid)->map(function ($item) {
+        $event->register = $events->where('eventid', $event->eventid)->map(function (array $item) {
             $item = (object) $item; // TODO: this is a bit too hacky for my liking - but it works!
             unset($item->eventid);
 

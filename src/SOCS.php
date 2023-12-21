@@ -23,18 +23,11 @@ abstract class SOCS
 
     protected Client $client;
 
-    private int $socsId;
-
-    private string $apiKey;
-
     /**
      * SOCS constructor.
      */
-    public function __construct(Config $config)
+    public function __construct(private Config $config)
     {
-        $this->socsId = $config->socsId;
-        $this->apiKey = $config->apiKey;
-
         $this->client = new Client([
             'base_uri' => $this->baseUri,
         ]);
@@ -42,13 +35,13 @@ abstract class SOCS
 
     /**
      * @param  array<string, mixed>  $array
-     * @return array<int|mixed|string>
+     * @return array<string,mixed>
      */
     protected function loadQuery(array $array = []): array
     {
         $defaults = [
-            'ID' => $this->socsId,
-            'key' => $this->apiKey,
+            'ID' => $this->config->socsId,
+            'key' => $this->config->apiKey,
         ];
 
         return array_merge($defaults, $array);
@@ -64,21 +57,14 @@ abstract class SOCS
         string $uri,
         array $options = [],
         string $method = 'GET'
-    ) {
+    ): XmlReader {
 
+        /**
+         * FYI - I've benchmarked the difference between XMlReader::fromStream and
+         * XmlReader::fromPsrResponse and the fromPsrResponse is faster.
+         */
         $response = $this->client->request($method, $uri, $options);
 
-        $xml = XmlReader::fromString($response->getBody()->getContents());
-
-        //$xml = simplexml_load_string($response->getBody()->getContents());
-        return $xml;
-
-        $json = json_encode($xml);
-
-        if ($json === false || $xml === false) {
-            throw new Exception('Unable to read XML', 422);
-        }
-
-        return json_decode($json);
+        return XmlReader::fromPsrResponse($response);
     }
 }

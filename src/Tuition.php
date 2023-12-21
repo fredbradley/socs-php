@@ -34,37 +34,18 @@ final class Tuition extends SOCS
         self::PERFORMINGARTS,
     ];
 
-    /**
-     * @throws Exception
-     */
-    public function getMusicLessons(?CarbonInterface $startDate = null): Collection
+    public function __call(string $name, array $arguments)
     {
-        return $this->getFeed(self::MUSIC, $startDate);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function getAcademicTutoring(?CarbonInterface $startDate = null): false|\SimpleXMLElement|string|null
-    {
-        return $this->getFeed(self::ACADEMIC, $startDate);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function getPerformingArts(
-        ?CarbonInterface $startDate = null
-    ): false|\SimpleXMLElement|string|null {
-        return $this->getFeed(self::PERFORMINGARTS, $startDate);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function getSportsCoaching(?CarbonInterface $startDate = null): false|\SimpleXMLElement|string|null
-    {
-        return $this->getFeed(self::SPORTSCOACHING, $startDate);
+        $method = match ($name) {
+            'getMusicLessons' => self::MUSIC,
+            'getSportsCoaching' => self::SPORTSCOACHING,
+            'getAcademicTutoring' => self::ACADEMIC,
+            'getPerformingArts' => self::PERFORMINGARTS,
+            default => throw new Exception('Method not allowed'),
+        };
+        if (in_array($method, $this->dataFeeds)) {
+            return $this->getFeed($method, $arguments[0] ?? null);
+        }
     }
 
     /**
@@ -74,10 +55,6 @@ final class Tuition extends SOCS
      */
     private function getFeed(string $feed, ?CarbonInterface $startDate = null): Collection
     {
-        if (! in_array($feed, $this->dataFeeds)) {
-            throw new Exception('Unexpected data feed requested');
-        }
-
         if (is_null($startDate)) {
             $startDate = Carbon::today();
         }

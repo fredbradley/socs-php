@@ -15,7 +15,7 @@
         </include>
     </source>
     <php>
-        <env name="SOCSID" value="${{ secrets.SOCSID }}"/>
-        <env name="SOCSAPIKEY" value="${{ secrets.SOCSAPIKEY }}"/>
+        <env name="SOCSID" value="25087"/>
+        <env name="SOCSAPIKEY" value="9C0304CE-CF41-49D9-BF01-125774761632"/>
     </php>
 </phpunit>

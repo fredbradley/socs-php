@@ -7,16 +7,19 @@ use Illuminate\Support\Collection;
 trait PupilsAndStaff
 {
     /**
-     * @var string|Collection<string>
+     * @var string|Collection<array-key,string>
      */
     public string|Collection $pupils;
 
     /**
-     * @var string|Collection<string>
+     * @var string|Collection<array-key,string>
      */
     public string|Collection $staff;
 
-    public function setPupilsAndStaff(array $object)
+    /**
+     * @param  array<string,mixed>  $object
+     */
+    public function setPupilsAndStaff(array $object): void
     {
         $this->pupils = 'Not Requested';
         $this->staff = 'Not Requested';
@@ -29,6 +32,9 @@ trait PupilsAndStaff
         }
     }
 
+    /**
+     * @param  array<string,mixed>  $club
+     */
     private function setStaff(array $club): void
     {
         $this->staff = collect(explode(',', $club['staff']));
@@ -38,6 +44,9 @@ trait PupilsAndStaff
         }
     }
 
+    /**
+     * @param  array<string,mixed>  $club
+     */
     private function setPupils(array $club): void
     {
         $this->pupils = collect(explode(',', $club['pupils']));

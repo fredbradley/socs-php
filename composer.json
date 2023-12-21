@@ -31,8 +31,7 @@
         "pestphp/pest-plugin-type-coverage": "^2.5",
         "phpmd/phpmd": "^2.15",
         "phpstan/phpstan": "^1.10",
-        "spatie/ray": "^1.28",
-        "vlucas/phpdotenv": "^4.0||^5.3"
+        "spatie/ray": "^1.28"
     },
     "autoload": {
         "psr-4": {
@@ -45,7 +44,10 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/pest --coverage -c phpunit-noenv.xml"
+        "test": "./vendor/bin/pest --coverage",
+        "pint": "./vendor/bin/pint",
+        "phpinsights": "./vendor/bin/phpinsights",
+        "phpmd": "./vendor/bin/phpmd src text phpmd.xml"
     },
     "config": {
         "sort-packages": true,

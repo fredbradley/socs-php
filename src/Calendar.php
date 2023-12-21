@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace FredBradley\SOCS;
 
 use Carbon\CarbonInterface;
+use Illuminate\Support\Collection;
+use Saloon\XmlWrangler\Exceptions\QueryAlreadyReadException;
+use Saloon\XmlWrangler\Exceptions\XmlReaderException;
+use Saloon\XmlWrangler\XmlReader;
+use Throwable;
 
 /**
  * Class Calendar
@@ -12,7 +17,7 @@ use Carbon\CarbonInterface;
 final class Calendar extends SOCS
 {
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return Collection<array-key, object>
      */
     public function getCalendar(
         CarbonInterface $startDate,
@@ -20,7 +25,7 @@ final class Calendar extends SOCS
         bool $withSport = true,
         bool $withCoCurricular = true,
         bool $withSchoolCalendar = true
-    ): false|\SimpleXMLElement|string|null {
+    ): Collection {
         $query = [];
         foreach (compact('withCoCurricular', 'withSchoolCalendar', 'withSport') as $key => $option) {
             if ($option === false) {
@@ -32,6 +37,24 @@ final class Calendar extends SOCS
 
         $options = $this->loadQuery($query);
 
-        return $this->getResponse('SOCScalendar.ashx', ['query' => $options]);
+        $response = $this->getResponse('SOCScalendar.ashx', ['query' => $options]);
+
+        return $this->collectionOfEvents($response);
+    }
+
+    /**
+     * @return Collection<array-key, object>
+     *
+     * @throws Throwable
+     * @throws QueryAlreadyReadException
+     * @throws XmlReaderException
+     */
+    private function collectionOfEvents(XmlReader $response): Collection
+    {
+        return $response->value('CalendarEvent')
+            ->collect()
+            ->map(function (array $calendarEvent) {
+                return (object) $calendarEvent;
+            });
     }
 }

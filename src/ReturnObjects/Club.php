@@ -23,8 +23,14 @@ final class Club extends ReturnObject
 
     public string $gender;
 
+    /**
+     * @var string|Collection<array-key,int>
+     */
     public string|Collection $yearGroups;
 
+    /**
+     * @param  array<array-key,string>  $club
+     */
     public function __construct(array $club)
     {
         $this->term = $club['term'];

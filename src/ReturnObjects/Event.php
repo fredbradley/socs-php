@@ -6,7 +6,6 @@ namespace FredBradley\SOCS\ReturnObjects;
 
 use FredBradley\SOCS\Traits\PupilsAndStaff;
 use Illuminate\Support\Collection;
-use SimpleXMLElement;
 
 final class Event extends ReturnObject
 {
@@ -16,11 +15,16 @@ final class Event extends ReturnObject
 
     public int $clubid;
 
-    /**
-     * @var Collection<string,SimpleXMLElement|string>|null
-     */
-    public ?Collection $register = null;
+    public string $title;
 
+    /**
+     * @var Collection<array-key, mixed>
+     */
+    public Collection $register;
+
+    /**
+     * @param  array<string,mixed>  $event
+     */
     public function __construct(array $event)
     {
         foreach ($event as $key => $value) {

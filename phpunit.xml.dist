@@ -14,4 +14,8 @@
             <directory suffix=".php">./src</directory>
         </include>
     </source>
+    <php>
+        <env name="SOCSID" value="${{ secrets.SOCSID }}"/>
+        <env name="SOCSAPIKEY" value="${{ secrets.SOCSAPIKEY }}"/>
+    </php>
 </phpunit>
