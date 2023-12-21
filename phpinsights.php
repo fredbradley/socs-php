@@ -5,11 +5,8 @@ declare(strict_types=1);
 return [
     'preset' => 'laravel',
     'exclude' => [
-        'src/Tuition.php',
         'src/Sport.php',
-        'src/Calendar.php',
         'src/ReturnObjects/Fixture.php',
-        'src/ReturnObjects/MusicLesson.php',
         //  'path/to/directory-or-file'
     ],
     'add' => [
