@@ -19,6 +19,16 @@ enum Attendance: string
         };
     }
 
+    public function getValue(): string
+    {
+        return match ($this) {
+            self::ATTENDED => 'Attended',
+            self::ABSENT => 'Absent',
+            self::AUTHORISED => 'Authorised Absent',
+            default => 'Not Set',
+        };
+    }
+
     public function label(): string
     {
         return match ($this) {
