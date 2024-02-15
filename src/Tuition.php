@@ -18,7 +18,7 @@ final class Tuition extends SOCS
 {
     public const MUSIC = 'musiclessons';
 
-    public const SPORTSCOACHING = 'sportscoaching';
+    public const SPORTCOACHING = 'sportcoaching';
 
     public const ACADEMIC = 'academictutoring';
 
@@ -29,7 +29,7 @@ final class Tuition extends SOCS
      */
     private array $dataFeeds = [
         self::MUSIC,
-        self::SPORTSCOACHING,
+        self::SPORTCOACHING,
         self::ACADEMIC,
         self::PERFORMINGARTS,
     ];
@@ -38,7 +38,7 @@ final class Tuition extends SOCS
     {
         $method = match ($name) {
             'getMusicLessons' => self::MUSIC,
-            'getSportsCoaching' => self::SPORTSCOACHING,
+            'getSportCoaching' => self::SPORTCOACHING,
             'getAcademicTutoring' => self::ACADEMIC,
             'getPerformingArts' => self::PERFORMINGARTS,
             default => throw new Exception('Method not allowed'),
