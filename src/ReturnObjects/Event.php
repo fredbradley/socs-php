@@ -17,6 +17,10 @@ final class Event extends ReturnObject
 
     public string $title;
 
+    public string $location;
+
+    public string $startdate;
+
     /**
      * @var Collection<array-key, mixed>
      */
