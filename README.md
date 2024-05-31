@@ -1,7 +1,7 @@
 # SOCS PHP
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fredbradley/socs-php.svg?style=flat-square)](https://packagist.org/packages/fredbradley/socs-php)
-[![Tests](https://github.com/fredbradley/socs-php/actions/workflows/pest.yml/badge.svg)
+[![Tests](https://github.com/fredbradley/socs-php/actions/workflows/pest.yml/badge.svg)](https://github.com/fredbradley/socs-php/actions/workflows/pest.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/fredbradley/socs-php.svg?style=flat-square)](https://packagist.org/packages/fredbradley/socs-php)
 
 
@@ -9,7 +9,7 @@ This is a PHP wrapper for the [SOCS](https://misocs.com) XML feeds.
 
 ## If you find this useful...
 
-This package was developed by [Fred Bradley](https://twitter.com/fredbradley), a developer at [Cranleigh School](https://www.cranleigh.org) and [Cranleigh Prep School](https://www.cranprep).
+This package was developed by [Fred Bradley](https://twitter.com/fredbradley), a developer at [Cranleigh School](https://www.cranleigh.org) and [Cranleigh Prep School](https://www.cranprep.org).
 If you find it useful, I'd really appreciate [a tweet](https://twitter.com/fredbradley) to let me know. Or even better, feel free to fund further developments.
 ## Installation
 
