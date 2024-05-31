@@ -11,6 +11,5 @@ final class Config
 {
     public function __construct(public int $socsId, public string $apiKey)
     {
-
     }
 }

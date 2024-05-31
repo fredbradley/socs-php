@@ -11,7 +11,7 @@
 |
 */
 
-// uses(Tests\TestCase::class)->in('Feature');
+uses(\FredBradley\SOCS\Tests\TestCase::class);
 
 /*
 |--------------------------------------------------------------------------

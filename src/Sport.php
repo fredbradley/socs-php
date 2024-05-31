@@ -24,8 +24,13 @@ final class Sport extends SOCS
         bool $withUnpublishedTeamSheets = false,
         bool $withTeamSheets = false
     ): false|\SimpleXMLElement|string|null {
+        $query = [];
         if ($withUnpublishedTeamSheets) {
+            // @todo
+            $query['P'] = 1;
         } elseif ($withTeamSheets) {
+            // @todo
+            $query['P'] = 2;
         }
 
         $query['startdate'] = $startDate->format(self::DATE_STRING);
@@ -39,6 +44,7 @@ final class Sport extends SOCS
         CarbonInterface $startDate,
         CarbonInterface $endDate
     ): false|\SimpleXMLElement|string|null {
+        $query = [];
         $query['startdate'] = $startDate->format(self::DATE_STRING);
         $query['enddate'] = $endDate->format(self::DATE_STRING);
         $options = $this->loadQuery($query);
@@ -48,6 +54,7 @@ final class Sport extends SOCS
 
     public function getTeams(): false|\SimpleXMLElement|string|null
     {
+        $query = [];
         $query['data'] = 'teams';
 
         $options = $this->loadQuery($query);
@@ -63,6 +70,7 @@ final class Sport extends SOCS
         CarbonInterface $endDate,
         bool $withUnpublishedTeamSheets = false
     ): \Illuminate\Support\Collection {
+        $query = [];
         if ($withUnpublishedTeamSheets) {
             $query['P'] = 1;
         }

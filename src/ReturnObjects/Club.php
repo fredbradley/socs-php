@@ -70,6 +70,9 @@ final class Club extends ReturnObject
         });
     }
 
+    /**
+     * @param  array<array-key,string>  $club
+     */
     private function setPlanning(array $club): void
     {
         $this->venue = $club['defaultvenue'];
@@ -77,7 +80,7 @@ final class Club extends ReturnObject
 
         collect(array_keys($club))->filter(function ($value) {
             return Str::endsWith($value, 'time');
-        })->each(function ($item) use ($club) {
+        })->each(function ($item) use ($club): void {
             $this->times->put(Str::before($item, 'time'), $club[$item]);
         });
         $this->times = $this->times->filter(function ($value) {

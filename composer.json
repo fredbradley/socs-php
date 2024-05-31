@@ -19,7 +19,7 @@
         "ext-json": "*",
         "ext-simplexml": "*",
         "guzzlehttp/guzzle": "^7.3",
-        "illuminate/support": "^7.0||^8.0||^9.0||^10.0",
+        "illuminate/support": "^7.0||^8.0||^9.0||^10.0||^11.0",
         "nesbot/carbon": "^2.0",
         "saloonphp/xml-wrangler": "^1.2"
     },
@@ -29,7 +29,6 @@
         "nunomaduro/phpinsights": "^2.11",
         "pestphp/pest": "^2.24",
         "pestphp/pest-plugin-type-coverage": "^2.5",
-        "phpmd/phpmd": "^2.15",
         "phpstan/phpstan": "^1.10",
         "spatie/ray": "^1.28"
     },
@@ -41,13 +40,18 @@
     "autoload-dev": {
         "psr-4": {
             "FredBradley\\SOCS\\Tests\\": "tests"
-        }
+        },
+        "classmap": [
+            "tests/TestCase.php"
+        ],
+        "files": [
+
+        ]
     },
     "scripts": {
         "test": "./vendor/bin/pest --coverage",
         "pint": "./vendor/bin/pint",
-        "phpinsights": "./vendor/bin/phpinsights",
-        "phpmd": "./vendor/bin/phpmd src text phpmd.xml"
+        "phpinsights": "./vendor/bin/phpinsights"
     },
     "config": {
         "sort-packages": true,

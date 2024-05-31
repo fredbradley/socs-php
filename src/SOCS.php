@@ -58,7 +58,6 @@ abstract class SOCS
         array $options = [],
         string $method = 'GET'
     ): XmlReader {
-
         /**
          * FYI - I've benchmarked the difference between XMlReader::fromStream and
          * XmlReader::fromPsrResponse and the fromPsrResponse is faster.

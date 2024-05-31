@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FredBradley\SOCS\Traits;
 
 use Illuminate\Support\Collection;
@@ -35,23 +37,23 @@ trait PupilsAndStaff
     /**
      * @param  array<string,mixed>  $club
      */
-    private function setStaff(array $club): void
+    private function setPupils(array $club): void
     {
-        $this->staff = collect(explode(',', $club['staff']));
-
-        if (empty($club['staff'])) {
-            $this->staff = collect();
+        $this->pupils = collect(explode(',', $club['pupils']));
+        if (empty($club['pupils'])) {
+            $this->pupils = collect();
         }
     }
 
     /**
      * @param  array<string,mixed>  $club
      */
-    private function setPupils(array $club): void
+    private function setStaff(array $club): void
     {
-        $this->pupils = collect(explode(',', $club['pupils']));
-        if (empty($club['pupils'])) {
-            $this->pupils = collect();
+        $this->staff = collect(explode(',', $club['staff']));
+
+        if (empty($club['staff'])) {
+            $this->staff = collect();
         }
     }
 }

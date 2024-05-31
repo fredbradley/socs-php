@@ -34,7 +34,13 @@ final class Tuition extends SOCS
         self::PERFORMINGARTS,
     ];
 
-    public function __call(string $name, array $arguments)
+    /**
+     * @param  array<array-key, mixed>  $arguments
+     *
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function __call(string $name, array $arguments): Collection
     {
         $method = match ($name) {
             'getMusicLessons' => self::MUSIC,
@@ -46,6 +52,7 @@ final class Tuition extends SOCS
         if (in_array($method, $this->dataFeeds)) {
             return $this->getFeed($method, $arguments[0] ?? null);
         }
+        throw new Exception('Method not found');
     }
 
     /**

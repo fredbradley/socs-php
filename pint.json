@@ -1,7 +1,5 @@
 {
-"preset": "laravel",
-"rules": {
-
-
-}
+    "preset": "laravel",
+    "rules": {
+    }
 }

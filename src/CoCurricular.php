@@ -43,9 +43,7 @@ final class CoCurricular extends SOCS
         $response = $this->getResponse('cocurricular.ashx', ['query' => $options]);
 
         return $response->value('pupil')->collect()->map(function (array $item) {
-            $item = (object) $item;
-
-            return $item;
+            return (object) $item;
         })->groupBy('eventid');
     }
 
@@ -70,7 +68,7 @@ final class CoCurricular extends SOCS
      *
      * @throws GuzzleException
      */
-    public function getEvents(CarbonInterface $startDate, CarbonInterface $endDate)
+    public function getEvents(CarbonInterface $startDate, CarbonInterface $endDate): Collection
     {
         $query = [
             'startdate' => $startDate->format(self::DATE_STRING),
@@ -87,6 +85,9 @@ final class CoCurricular extends SOCS
         return $this->getCollectionOfEventsFromResponse($response);
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function getClubById(int $clubId): ?Club
     {
         $clubs = $this->getClubs(true, true, true);
@@ -165,6 +166,8 @@ final class CoCurricular extends SOCS
 
     /**
      * @return Collection<array-key, Event>
+     *
+     * @throws GuzzleException
      */
     private function getCollectionOfEventsFromResponse(XmlReader $response): Collection
     {

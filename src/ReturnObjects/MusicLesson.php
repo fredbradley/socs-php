@@ -24,10 +24,13 @@ final class MusicLesson
 
     public string $attendance;
 
+    /**
+     * @param  array<array-key, string>  $lesson
+     */
     public function __construct(array $lesson)
     {
         $lesson = (object) $lesson;
-        $enddate = isset($lesson->enddate) ? $lesson->enddate : $lesson->startdate;
+        $enddate = $lesson->enddate ?? $lesson->startdate;
         $this->pupilId = $lesson->pupilid;
         $this->staffId = $lesson->staffid;
         $this->startTime = Carbon::parse($this->convertDate($lesson->startdate).' '.$lesson->starttime);
