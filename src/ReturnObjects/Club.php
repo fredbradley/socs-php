@@ -56,7 +56,7 @@ final class Club extends ReturnObject
 
     private function getYearText(): string
     {
-        $year = $this->academicYear;
+        $year = (string) $this->academicYear;
 
         return sprintf(
             '%d-%d',
