@@ -16,6 +16,8 @@ final class Club extends ReturnObject
 
     public int $academicYear;
 
+    public string $yearText;
+
     public string $category;
 
     public int $clubId;
@@ -40,6 +42,7 @@ final class Club extends ReturnObject
     {
         $this->term = $club['term'];
         $this->academicYear = (int) $club['academicyear'];
+        $this->yearText = $this->getYearText();
         $this->category = $club['category'];
         $this->clubId = (int) $club['clubid'];
         $this->clubName = $this->getClubName($club['clubname']);
@@ -49,6 +52,18 @@ final class Club extends ReturnObject
         if (isset($club['defaultvenue'])) {
             $this->setPlanning($club);
         }
+    }
+
+    private function getYearText(): string
+    {
+        $year = $this->academicYear;
+
+        return sprintf(
+            '%d-%d',
+            substr($year, 0, 4),
+            substr($year, 4, 4)
+        );
+
     }
 
     private function getClubName(string $clubName): string
