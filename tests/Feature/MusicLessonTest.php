@@ -16,6 +16,13 @@ it('is using tuition', function () {
     $socs = new Tuition($this->config);
     expect($socs)->toBeInstanceOf(Tuition::class);
 });
+
+it('gets staff pupil relationships', function () {
+    $socs = new Tuition($this->config);
+    $relationships = $socs->getRelationships('musiclessons');
+    expect($relationships)->toBeInstanceOf(Collection::class);
+});
+
 it('can get music lessons', function () {
     $socs = new Tuition($this->config);
     $lessons = $socs->getMusicLessons(Carbon::now()->subDays(14));

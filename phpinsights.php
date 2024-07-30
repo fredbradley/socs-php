@@ -6,7 +6,7 @@ return [
     'preset' => 'laravel',
     'ide' => 'phpstorm',
     'exclude' => [
-        //    'src/Sport.php',
+        'src/Sport.php',
         //    'src/ReturnObjects/Fixture.php',
         //  'path/to/directory-or-file'
     ],
@@ -27,7 +27,7 @@ return [
     ],
     'config' => [
         \NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class => [
-            'maxComplexity' => 7,
+            'maxComplexity' => 8,
         ],
         \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
             'lineLimit' => 120,

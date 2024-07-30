@@ -63,7 +63,6 @@ final class Club extends ReturnObject
             substr($year, 0, 4),
             substr($year, 4, 4)
         );
-
     }
 
     private function getClubName(string $clubName): string

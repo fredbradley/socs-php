@@ -26,7 +26,7 @@ final class CoCurricular extends SOCS
      * @return Collection<string, string|object>
      *
      * @throws GuzzleException
-     * @throws Exception
+     * @throws Exception|Throwable
      */
     public function getRegisters(?CarbonInterface $startDate = null): Collection
     {
@@ -47,6 +47,9 @@ final class CoCurricular extends SOCS
         })->groupBy('eventid');
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function getEventById(int $eventId, ?CarbonInterface $date = null): ?Event
     {
         if (is_null($date)) {

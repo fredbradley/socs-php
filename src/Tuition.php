@@ -10,6 +10,7 @@ use Exception;
 use FredBradley\SOCS\ReturnObjects\MusicLesson;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Collection;
+use Throwable;
 
 /**
  * Class Tuition
@@ -53,6 +54,46 @@ final class Tuition extends SOCS
             return $this->getFeed($method, $arguments[0] ?? null);
         }
         throw new Exception('Method not found');
+    }
+
+    /**
+     * @throws Exception
+     * @throws GuzzleException|Throwable
+     */
+    public function getRelationships(string $type): Collection
+    {
+        $method = match ($type) {
+            'musiclessons' => 'musicstaffpupils',
+            'sportcoaching' => 'sportcoachingstaffpupils',
+            'academictutoring' => 'academictutoringstaffpupils',
+            'performingarts' => 'performingartsstaffpupils',
+            default => throw new Exception('Method not allowed'),
+        };
+
+        $options = $this->loadQuery([
+            'data' => $method,
+        ]);
+
+        $response = $this->getResponse('tuition.ashx', ['query' => $options]);
+
+        $result = $response->value('staffpupil')->collect();
+
+        $validResult = $result->every(function (array $item) {
+            /**
+             * Collection Validation: The every method is used to iterate over each element
+             * in the collection. The callback function returns true if pupilId and
+             * staffId are both populated; otherwise, it returns false.
+             */
+            return ! empty($item['staffid']) && ! empty($item['pupilid']);
+        });
+
+        if (! $validResult) {
+            error_log('Invalid data returned from SOCS. Please check the data feed: '.$method.' for SOCSID: '.$this->socsId);
+
+            return collect();
+        }
+
+        return $result;
     }
 
     /**

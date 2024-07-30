@@ -23,6 +23,8 @@ abstract class SOCS
 
     protected Client $client;
 
+    protected int $socsId;
+
     /**
      * SOCS constructor.
      */
@@ -31,6 +33,7 @@ abstract class SOCS
         $this->client = new Client([
             'base_uri' => $this->baseUri,
         ]);
+        $this->socsId = $config->socsId;
     }
 
     /**
