@@ -89,8 +89,6 @@ final class Tuition extends SOCS
 
         if (! $validResult) {
             error_log('Invalid data returned from SOCS. Please check the data feed: '.$method.' for SOCSID: '.$this->socsId);
-
-            return collect();
         }
 
         return $result;
