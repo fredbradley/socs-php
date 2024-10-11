@@ -81,7 +81,6 @@ final class Sport extends SOCS
 
         $response = $this->getResponse('mso-sport.ashx', ['query' => $options]);
 
-        //return $response;
-        return $this->recordsToCollection($response)->mapInto(Fixture::class);
+        return collect(collect($response->values()['fixtures'])['fixture'])->mapInto(Fixture::class);
     }
 }

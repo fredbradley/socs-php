@@ -45,20 +45,24 @@ final class Fixture
      */
     public array $pupils;
 
-    public function __construct(\stdClass $fixture)
+    public function __construct(\stdClass|array $fixture)
     {
-        $this->eventId = $fixture->eventid;
-        $this->teamId = $fixture->teamid;
+        $fixture = (object) $fixture;
+
+        $this->eventId = (int) $fixture->eventid;
+        $this->teamId = (int) $fixture->teamid;
         $this->sport = $fixture->sport;
         $this->matchType = $fixture->matchtype;
         $this->opposition = $fixture->opposition;
         $this->oppositionTeam = $fixture->oppositionteam;
         $this->dateTime = $this->getDateTime($fixture->date, $fixture->time);
+        if (isset($fixture->pupils)) {
+            $this->pupils = array_filter(explode(',', $fixture->pupils));
+        }
     }
 
     private function getDateTime(string $date, string $time): Carbon|false
     {
-        //        return $date." ".$time;
         $date = Carbon::createFromFormat('d/m/Y', $date)->toDateString();
         $time = Carbon::createFromFormat('G:i', $time)->toTimeString();
 
