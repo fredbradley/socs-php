@@ -30,6 +30,7 @@
         "pestphp/pest": "^2.24",
         "pestphp/pest-plugin-type-coverage": "^2.5",
         "phpstan/phpstan": "^1.10",
+        "projektgopher/whisky": "^0.7.0",
         "spatie/ray": "^1.28"
     },
     "autoload": {

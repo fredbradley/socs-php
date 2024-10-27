@@ -25,7 +25,7 @@ it('gets staff pupil relationships', function () {
 
 it('can get music lessons', function () {
     $socs = new Tuition($this->config);
-    $lessons = $socs->getMusicLessons(Carbon::now()->subDays(14));
+    $lessons = $socs->getMusicLessons(Carbon::now()->subDays(30));
     expect($lessons)->toBeInstanceOf(Collection::class)
         ->and($lessons->first())->toBeInstanceOf(MusicLesson::class);
 });
