@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 beforeEach(function () {
     $this->config = new Config(
-        socsId: (int)$_ENV['SOCSID'],
+        socsId: (int) $_ENV['SOCSID'],
         apiKey: $_ENV['SOCSAPIKEY']
     );
     $this->socs = new CoCurricular($this->config);
@@ -45,7 +45,7 @@ it('can get a specific event', function () {
     $events = $this->socs->getEvents(Carbon::now()->subDays(14), Carbon::now()->subDays(7));
     $event = $this->socs->getEventById(
         $events->first()->eventid,
-        Carbon::createFromFormat("d/m/Y", $events->first()->startdate)
+        Carbon::createFromFormat('d/m/Y', $events->first()->startdate)
     );
     expect($event)->toBeInstanceOf(Event::class);
 });
