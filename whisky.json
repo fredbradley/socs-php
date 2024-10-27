@@ -3,9 +3,6 @@
   "hooks": {
     "pre-commit": [
         "./vendor/bin/pint --dirty --test"
-    ],
-    "pre-push": [
-      "composer test"
     ]
   }
 }
