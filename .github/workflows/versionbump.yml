@@ -26,8 +26,7 @@ jobs:
           dry_run: true
 
       - name: Get updated commit SHA
-        run: |
-          echo "##[set-output name=commit_id;]$(git rev-parse HEAD)"
+        run: echo "commit_id=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
         id: updated_sha
 
       - name: Bump version and push tag
@@ -42,4 +41,4 @@ jobs:
       - name: Create Release
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release create ${{ steps.tag_version.outputs.new_tag }} -t ${{ steps.tag_version.outputs.new_tag }} --generate-notes
+        run: gh release create ${{ steps.tag_version.outputs.new_tag }} -t ${{ steps.tag_version.outputs.new_tag }} -n "{{ steps.tag_version.outputs.changelog }}"
