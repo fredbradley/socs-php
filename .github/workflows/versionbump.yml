@@ -17,7 +17,7 @@ jobs:
 
       - name: Calculate version
         id: tag_version
-        uses: miguelfito/github-bump-and-tag-action@v1
+        uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: patch
@@ -30,7 +30,7 @@ jobs:
         id: updated_sha
 
       - name: Bump version and push tag
-        uses: miguelfito/github-bump-and-tag-action@v1
+        uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_sha: ${{ steps.updated_sha.outputs.commit_id }}
@@ -41,4 +41,4 @@ jobs:
       - name: Create Release
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release create ${{ steps.tag_version.outputs.new_tag }} -t ${{ steps.tag_version.outputs.new_tag }} -n "${{ steps.tag_version.outputs.changelog }}"
+        run: gh release create ${{ steps.tag_version.outputs.new_tag }} -t ${{ steps.tag_version.outputs.new_tag }} --generate-notes
