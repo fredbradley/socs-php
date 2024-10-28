@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 beforeEach(function () {
     $this->config = new Config(
-        socsId: (int) $_ENV['SOCSID'],
+        socsId: (int)$_ENV['SOCSID'],
         apiKey: $_ENV['SOCSAPIKEY']
     );
 });
@@ -26,11 +26,12 @@ it('gets staff pupil relationships', function () {
 it('can get music lessons', function () {
     $socs = new Tuition($this->config);
     $lessons = $socs->getMusicLessons(Carbon::now()->subDays(30));
-    if ($lessons !== null) {
-        expect($lessons)->toBeInstanceOf(Collection::class)
-            ->and($lessons->first())->toBeInstanceOf(MusicLesson::class);
+    expect($lessons)->toBeInstanceOf(Collection::class);
+
+    if ($lessons->isNotEmpty()) {
+        expect($lessons->first())->toBeInstanceOf(MusicLesson::class);
     } else {
-        expect($lessons)->toBeNull();
+        expect($lessons->first())->toBeNull();
     }
 });
 it('throws exception when dodgy feed is presented', function () {
