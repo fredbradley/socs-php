@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "Would you like to run the tests? (Y/n)"
+read -r run_tests
+if [ "$run_tests" != "Y" ]; then
+    echo "OK, no tests!"
+else
+        composer test-local
+fi
+
+echo "Would you like to run Pint? (Y/n)"
+read -r run_pint
+
+if [ "$run_pint" != "Y" ]; then
+    echo "OK, no pint"
+else
+    echo "Running Pint: $run_pint"
+    files=$(git diff --cached --name-only --diff-filter=ACM -- 'src/*.php');
+
+    if [ -n "$files" ]; then
+        vendor/bin/pint "$files"
+        git add "$files"
+    else
+        echo "No PHP files to lint."
+    fi
+
+fi
+

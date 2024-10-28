@@ -1,5 +1,7 @@
 <?php
 
+use FredBradley\SOCS\Config;
+
 test('do not use env helper in codebase')
     ->expect('env')
     ->not->toBeUsed();
@@ -29,7 +31,7 @@ test('ReturnObject is Abstract')
     ->toBeAbstract();
 
 test('Config has variables')
-    ->expect(\FredBradley\SOCS\Config::class)
+    ->expect(Config::class)
     ->toBeClass()
     ->toHaveConstructor()
     ->toBeFinal();

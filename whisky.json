@@ -2,7 +2,7 @@
   "disabled": [],
   "hooks": {
     "pre-commit": [
-        "./vendor/bin/pint --dirty --test"
+        "bash ./scripts/pre-commit"
     ]
   }
 }

@@ -46,13 +46,14 @@
             "tests/TestCase.php"
         ],
         "files": [
-
         ]
     },
     "scripts": {
-        "test": "./vendor/bin/pest --coverage",
         "pint": "./vendor/bin/pint",
-        "phpinsights": "./vendor/bin/phpinsights"
+        "phpinsights": "./vendor/bin/phpinsights",
+        "phpstan": "./vendor/bin/phpstan analyse",
+        "test": "./vendor/bin/pest --coverage",
+        "test-local": "./vendor/bin/pest --coverage --configuration=phpunit.xml.local"
     },
     "config": {
         "sort-packages": true,

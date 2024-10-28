@@ -14,3 +14,4 @@ vendor
 .env
 phpunit.xml
 .phpactor.json
+phpunit.xml.local

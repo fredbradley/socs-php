@@ -9,7 +9,5 @@ namespace FredBradley\SOCS;
  */
 final class Config
 {
-    public function __construct(public int $socsId, public string $apiKey)
-    {
-    }
+    public function __construct(public int $socsId, public string $apiKey) {}
 }
