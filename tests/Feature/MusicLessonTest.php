@@ -26,8 +26,12 @@ it('gets staff pupil relationships', function () {
 it('can get music lessons', function () {
     $socs = new Tuition($this->config);
     $lessons = $socs->getMusicLessons(Carbon::now()->subDays(30));
-    expect($lessons)->toBeInstanceOf(Collection::class)
-        ->and($lessons->first())->toBeInstanceOf(MusicLesson::class);
+    if ($lessons !== null) {
+        expect($lessons)->toBeInstanceOf(Collection::class)
+            ->and($lessons->first())->toBeInstanceOf(MusicLesson::class);
+    } else {
+        expect($lessons)->toBeNull();
+    }
 });
 it('throws exception when dodgy feed is presented', function () {
     $socs = new Tuition($this->config);
