@@ -41,4 +41,4 @@ jobs:
       - name: Create Release
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release create ${{ steps.tag_version.outputs.new_tag }} -t ${{ steps.tag_version.outputs.new_tag }} -n "{{ steps.tag_version.outputs.changelog }}"
+        run: gh release create ${{ steps.tag_version.outputs.new_tag }} -t ${{ steps.tag_version.outputs.new_tag }} -n "${{ steps.tag_version.outputs.changelog }}"
