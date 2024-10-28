@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 beforeEach(function () {
     $this->config = new Config(
-        socsId: (int)$_ENV['SOCSID'],
+        socsId: (int) $_ENV['SOCSID'],
         apiKey: $_ENV['SOCSAPIKEY']
     );
 });
