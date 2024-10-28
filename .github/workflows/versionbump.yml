@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main branch to calculate changelog
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -24,20 +24,6 @@ jobs:
           create_annotated_tag: true
           tag_prefix: v
           dry_run: true
-
-      #      - name: Set npm package version
-      #        uses: reedyuk/npm-version@1.0.1
-      #        with:
-      #          version: ${{ steps.tag_version.outputs.new_version }}
-      #
-      #      - name: Commit & push version bumping on package*.json
-      #        uses: stefanzweifel/git-auto-commit-action@v4
-      #        with:
-      #          branch: master
-      #          file_pattern: package*.json
-      #          commit_message: 'chore(release): Automated version bumping to ${{ steps.tag_version.outputs.new_tag }}'
-      #          commit_user_name: GitHub Actions
-      #          commit_user_email: actions@github.com
 
       - name: Get updated commit SHA
         run: |
