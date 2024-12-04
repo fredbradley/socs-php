@@ -106,7 +106,8 @@ final class CoCurricular extends SOCS
     public function getClubs(
         bool $withPupils = false,
         bool $withStaff = false,
-        bool $withPlanning = false
+        bool $withPlanning = false,
+        ?string $termName = null
     ): Collection {
         $query = [];
         if ($withPlanning) {
@@ -125,7 +126,15 @@ final class CoCurricular extends SOCS
 
         $results = $this->getResponse('cocurricular.ashx', ['query' => $options]);
 
-        return $this->returnClubsFromResponse($results);
+        $result = $this->returnClubsFromResponse($results);
+
+        if (is_null($termName)) {
+            return $result;
+        }
+
+        return $result->filter(function (Club $club) use ($termName) {
+            return $club->term === $termName;
+        });
     }
 
     /**
