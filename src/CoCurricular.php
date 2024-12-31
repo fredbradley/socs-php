@@ -7,7 +7,7 @@ namespace FredBradley\SOCS;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Exception;
-use FredBradley\SOCS\ReturnObjects\Attendance;
+use FredBradley\SOCS\Enums\Attendance;
 use FredBradley\SOCS\ReturnObjects\Club;
 use FredBradley\SOCS\ReturnObjects\Event;
 use GuzzleHttp\Exception\GuzzleException;

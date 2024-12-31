@@ -1,4 +1,5 @@
 <?php
+
 it('can mutate an event array', function () {
     $array = [
         'eventid' => '1',
@@ -14,7 +15,7 @@ it('can mutate an event array', function () {
         ->and($event->location)->toBeString()
         ->and($event->startdate)->toBeString();
 });
-it('properly deals with ampersands', function() {
+it('properly deals with ampersands', function () {
     $array = [
         'eventid' => '1',
         'clubid' => '1',

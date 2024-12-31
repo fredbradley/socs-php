@@ -6,7 +6,7 @@ namespace FredBradley\SOCS\ReturnObjects;
 
 use Carbon\Carbon;
 
-final class Fixture
+final class Fixture extends ReturnObject
 {
     public int $eventId;
 

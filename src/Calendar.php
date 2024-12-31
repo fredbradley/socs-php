@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FredBradley\SOCS;
 
 use Carbon\CarbonInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Collection;
 use Saloon\XmlWrangler\Exceptions\QueryAlreadyReadException;
 use Saloon\XmlWrangler\Exceptions\XmlReaderException;
@@ -18,6 +19,8 @@ final class Calendar extends SOCS
 {
     /**
      * @return Collection<array-key, object>
+     *
+     * @throws GuzzleException
      */
     public function getCalendar(
         CarbonInterface $startDate,
@@ -45,9 +48,8 @@ final class Calendar extends SOCS
     /**
      * @return Collection<array-key, object>
      *
-     * @throws Throwable
      * @throws QueryAlreadyReadException
-     * @throws XmlReaderException
+     * @throws XmlReaderException|Throwable
      */
     private function collectionOfEvents(XmlReader $response): Collection
     {

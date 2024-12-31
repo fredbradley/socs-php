@@ -1,4 +1,5 @@
 <?php
+
 it('can mutate an fixture array', function () {
     $array = [
         'eventid' => '1',

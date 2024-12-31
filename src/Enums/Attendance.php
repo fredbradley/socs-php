@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FredBradley\SOCS\ReturnObjects;
+namespace FredBradley\SOCS\Enums;
 
 enum Attendance: string
 {

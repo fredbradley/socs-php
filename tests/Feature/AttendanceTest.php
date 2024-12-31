@@ -1,6 +1,6 @@
 <?php
 
-use FredBradley\SOCS\ReturnObjects\Attendance;
+use FredBradley\SOCS\Enums\Attendance;
 
 it('can get bootstrap class for each attendance type', function () {
     expect(Attendance::ATTENDED->bootstrapClass())->toBe('success')

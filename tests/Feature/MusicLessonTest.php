@@ -45,7 +45,6 @@ it('can deal with a null date', function () {
     expect($lessons)->toBeInstanceOf(Collection::class);
 });
 
-
 it('can mutate', function () {
 
     $lesson = [

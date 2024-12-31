@@ -35,6 +35,13 @@ final class Tuition extends SOCS
         self::PERFORMINGARTS,
     ];
 
+    private array $methodMap = [
+        'getMusicLessons' => self::MUSIC,
+        'getSportCoaching' => self::SPORTCOACHING,
+        'getAcademicTutoring' => self::ACADEMIC,
+        'getPerformingArts' => self::PERFORMINGARTS,
+    ];
+
     /**
      * @param  array<array-key, mixed>  $arguments
      *
@@ -43,17 +50,13 @@ final class Tuition extends SOCS
      */
     public function __call(string $name, array $arguments): Collection
     {
-        $method = match ($name) {
-            'getMusicLessons' => self::MUSIC,
-            'getSportCoaching' => self::SPORTCOACHING,
-            'getAcademicTutoring' => self::ACADEMIC,
-            'getPerformingArts' => self::PERFORMINGARTS,
-            default => throw new Exception('Method not allowed'),
-        };
-        if (in_array($method, $this->dataFeeds)) {
-            return $this->getFeed($method, $arguments[0] ?? null);
+        if (! array_key_exists($name, $this->methodMap)) {
+            throw new Exception('Method not allowed');
         }
-        throw new Exception('Method not found');
+
+        $method = $this->methodMap[$name];
+
+        return $this->getFeed($method, $arguments[0] ?? null);
     }
 
     /**

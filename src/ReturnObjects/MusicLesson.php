@@ -6,7 +6,7 @@ namespace FredBradley\SOCS\ReturnObjects;
 
 use Carbon\Carbon;
 
-final class MusicLesson
+final class MusicLesson extends ReturnObject
 {
     public string $pupilId;
 

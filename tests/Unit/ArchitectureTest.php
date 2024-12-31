@@ -30,6 +30,10 @@ test('ReturnObject is Abstract')
     ->expect(\FredBradley\SOCS\ReturnObjects\ReturnObject::class)
     ->toBeAbstract();
 
+test('All classes in ReturnObjects extend ReturnObject')
+    ->expect('FredBradley\SOCS\ReturnObjects')
+    ->toExtend(\FredBradley\SOCS\ReturnObjects\ReturnObject::class);
+
 test('Config has variables')
     ->expect(Config::class)
     ->toBeClass()
@@ -42,6 +46,7 @@ test('Classes Extend SOCS')
         'FredBradley\SOCS\Traits',
         'FredBradley\SOCS\ReturnObjects',
         'FredBradley\SOCS\Config',
+        \FredBradley\SOCS\Enums\Attendance::class,
     ]);
 test('Traits are Traits')
     ->expect('FredBradley\SOCS\Traits')
