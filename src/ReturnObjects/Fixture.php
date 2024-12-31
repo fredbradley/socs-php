@@ -59,6 +59,17 @@ final class Fixture
         if (isset($fixture->pupils)) {
             $this->pupils = array_filter(explode(',', $fixture->pupils));
         }
+        $this->location = $fixture->location;
+        $this->locationDetails = $fixture->locationdetails;
+        $this->latLng = $fixture->latlng;
+        $this->pointsFor = (int) $fixture->pointsfor;
+        $this->pointsAgainst = (int) $fixture->pointsagainst;
+
+        $this->winner = $fixture->winner;
+        $this->result = $fixture->result;
+        $this->details = $fixture->details;
+        $this->url = $fixture->url;
+
     }
 
     private function getDateTime(string $date, string $time): Carbon|false

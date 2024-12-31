@@ -44,3 +44,31 @@ it('can deal with a null date', function () {
     $lessons = $socs->getMusicLessons(null);
     expect($lessons)->toBeInstanceOf(Collection::class);
 });
+
+
+it('can mutate', function () {
+
+    $lesson = [
+        'pupilid' => '3e4r4e38ew9',
+        'staffid' => '3e4r4e38ew9',
+        'startdate' => '01/12/2025',
+        'starttime' => '12:00',
+        'enddate' => '01/12/2025',
+        'endtime' => '13:00',
+        'instrument' => 'Test Instrument',
+        'title' => 'Test Title',
+        'location' => 'Test Location',
+        'attendance' => 'Test Attendance',
+    ];
+
+    $musicLesson = new \FredBradley\SOCS\ReturnObjects\MusicLesson($lesson);
+
+    expect($musicLesson->pupilId)->toBeString()
+        ->and($musicLesson->staffId)->toBeString()
+        ->and($musicLesson->startTime)->toBeInstanceOf(\Carbon\Carbon::class)
+        ->and($musicLesson->endTime)->toBeInstanceOf(\Carbon\Carbon::class)
+        ->and($musicLesson->instrument)->toBeString()
+        ->and($musicLesson->title)->toBeString()
+        ->and($musicLesson->location)->toBeString()
+        ->and($musicLesson->attendance)->toBeString();
+});
