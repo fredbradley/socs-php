@@ -15,11 +15,11 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-json": "*",
         "ext-simplexml": "*",
         "guzzlehttp/guzzle": "^7.3",
-        "illuminate/support": "^10.0||^11.0",
+        "illuminate/support": "^11.0||^12.0",
         "nesbot/carbon": "^3.0",
         "saloonphp/xml-wrangler": "^1.2"
     },
