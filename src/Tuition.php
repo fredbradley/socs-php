@@ -14,6 +14,10 @@ use Throwable;
 
 /**
  * Class Tuition
+ * @method getMusicLessons
+ * @method getSportCoaching
+ * @method getAcademicTutoring
+ * @method getPerformingArts
  */
 final class Tuition extends SOCS
 {
@@ -62,6 +66,8 @@ final class Tuition extends SOCS
     /**
      * @throws Exception
      * @throws GuzzleException|Throwable
+     *
+     * @returns Collection<array-key, array>
      */
     public function getRelationships(string $type): Collection
     {
