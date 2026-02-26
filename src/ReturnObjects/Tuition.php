@@ -6,7 +6,7 @@ namespace FredBradley\SOCS\ReturnObjects;
 
 use Carbon\Carbon;
 
-final class MusicLesson extends ReturnObject
+final class Tuition extends ReturnObject
 {
     public string $pupilId;
 
@@ -17,6 +17,8 @@ final class MusicLesson extends ReturnObject
     public Carbon $endTime;
 
     public ?string $instrument;
+
+    public ?string $lamda;
 
     public string $title;
 
@@ -35,6 +37,7 @@ final class MusicLesson extends ReturnObject
         $this->staffId = $lesson->staffid;
         $this->startTime = Carbon::parse($this->convertDate($lesson->startdate).' '.$lesson->starttime);
         $this->endTime = Carbon::parse($this->convertDate($enddate).' '.$lesson->endtime);
+        $this->lamda = property_exists($lesson, 'discipline') ? $lesson->discipline : null;
         $this->instrument = property_exists($lesson, 'instrument') ? $lesson->instrument : null;
         $this->title = $lesson->title;
         $this->location = is_string($lesson->location) ? $lesson->location : '';

@@ -7,27 +7,27 @@ namespace FredBradley\SOCS;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Exception;
-use FredBradley\SOCS\ReturnObjects\MusicLesson;
+use FredBradley\SOCS\ReturnObjects\Tuition as TuitionReturnObject;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Collection;
 use Throwable;
 
 /**
  * Class Tuition
- * @method getMusicLessons
- * @method getSportCoaching
- * @method getAcademicTutoring
- * @method getPerformingArts
+ * @method getMusicLessons()
+ * @method getSportCoaching()
+ * @method getAcademicTutoring()
+ * @method getPerformingArts()
  */
 final class Tuition extends SOCS
 {
-    public const MUSIC = 'musiclessons';
+    public const string MUSIC = 'musiclessons';
 
-    public const SPORTCOACHING = 'sportcoaching';
+    public const string SPORTCOACHING = 'sportcoaching';
 
-    public const ACADEMIC = 'academictutoring';
+    public const string ACADEMIC = 'academictutoring';
 
-    public const PERFORMINGARTS = 'performingarts';
+    public const string PERFORMINGARTS = 'performingarts';
 
     /**
      * @var array<string>
@@ -39,6 +39,9 @@ final class Tuition extends SOCS
         self::PERFORMINGARTS,
     ];
 
+    /**
+     * @var array<string, string>
+     */
     private array $methodMap = [
         'getMusicLessons' => self::MUSIC,
         'getSportCoaching' => self::SPORTCOACHING,
@@ -67,7 +70,7 @@ final class Tuition extends SOCS
      * @throws Exception
      * @throws GuzzleException|Throwable
      *
-     * @returns Collection<array-key, array>
+     * @return Collection<array-key, array>
      */
     public function getRelationships(string $type): Collection
     {
@@ -104,7 +107,7 @@ final class Tuition extends SOCS
     }
 
     /**
-     * @return Collection<array-key, MusicLesson>
+     * @return Collection<array-key, Tuition>
      *
      * @throws GuzzleException
      */
@@ -127,6 +130,6 @@ final class Tuition extends SOCS
         $lessons = $response->value('lesson')->collect();
 
         return $lessons
-            ->mapInto(MusicLesson::class);
+            ->mapInto(TuitionReturnObject::class);
     }
 }
